@@ -2,6 +2,7 @@ import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/models/word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/word_controller.dart';
 
@@ -15,15 +16,26 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: GetBuilder<WordController>(builder: (cont) {
         return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              const SizedBox(height: 50),
-              const Center(
+              const SizedBox(height: 60),
+              Center(
                 child: Text(
                   'Dev Dictionary',
-                  style: TextStyle(
+                  style: GoogleFonts.oswald(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Center(
+                child: Text(
+                  'Programmer\'s Dictionary',
+                  style: GoogleFonts.openSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
                     color: Colors.white,
                   ),
                 ),
@@ -73,10 +85,10 @@ class MyHomePage extends StatelessWidget {
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
-              const SizedBox(height: 200.0),
+              const SizedBox(height: 150.0),
               searchController.text.isEmpty
                   ? const Text(
-                      'No result found',
+                      'উপরে কিছু লিখুন, আমরা খুঁজে দিচ্ছি',
                       style: TextStyle(
                         color: Colors.white54,
                         fontSize: 20,
@@ -94,26 +106,50 @@ class MyHomePage extends StatelessWidget {
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
                           children: [
-                            Center(
-                              child: Text(
-                                cont.filteredTitle,
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Container(
+                                height: 65,
+                                decoration: BoxDecoration(
+                                  color: bgColor2,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    cont.filteredTitle,
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 20),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                cont.filteredDescription,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Container(
+                                height: 210,
+                                decoration: BoxDecoration(
+                                  color: bgColor2,
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
-                                textAlign: TextAlign.center,
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      cont.filteredDescription,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],

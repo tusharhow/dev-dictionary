@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class WordController extends GetxController {
   var url =
-      'https://raw.githubusercontent.com/tusharhow/dev-dictionary/main/dev-dictionary.json';
+      'https://raw.githubusercontent.com/tusharhow/dev-dictionary-data/main/dev_dictionary_data.json';
   var isLoading = false.obs;
 // search word from json file
   var filteredTitle;
