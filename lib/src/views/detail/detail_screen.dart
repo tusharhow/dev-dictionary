@@ -45,13 +45,14 @@ class DetailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: defaultPadding),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: defaultPadding),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: defaultPadding),
                               child: Text(
                                 word.bn,
                                 style: const TextStyle(
@@ -110,7 +111,15 @@ class DetailScreen extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    controller.addBookmark(word);
+                                    controller.addBookmark(word).then(
+                                          (value) =>
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                            const SnackBar(
+                                              content: Text('Bookmark Added'),
+                                            ),
+                                          ),
+                                        );
                                   },
                                   child: Container(
                                     height: 45,
