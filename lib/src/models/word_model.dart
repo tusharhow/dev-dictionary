@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final wordModel = wordModelFromJson(jsonString);
+
 import 'dart:convert';
 
 WordModel wordModelFromJson(String str) => WordModel.fromJson(json.decode(str));

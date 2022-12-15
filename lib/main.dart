@@ -1,14 +1,11 @@
 import 'package:dev_dictionary/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'views/homepage.dart';
+import 'src/views/home_page/homepage.dart';
 
 void main() {
   runApp(const MyApp());
-
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,10 +15,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.blue,
-        canvasColor: bgColor,
+        scaffoldBackgroundColor: bgColor,
       ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
