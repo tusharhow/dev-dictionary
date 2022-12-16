@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../controllers/word_data.dart';
+import '../controllers/word_data_controller.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({
@@ -22,9 +22,14 @@ class SearchBarWidget extends StatelessWidget {
           controller: textEditingController,
           decoration: InputDecoration(
             filled: true,
-            fillColor: bgColor2,
+            fillColor: controller.isDarkMode.value
+                ? const Color.fromARGB(255, 79, 89, 141)
+                : bgColor2,
             hintText: 'কিছু লিখুন...',
-            hintStyle: const TextStyle(color: Colors.white54),
+            hintStyle: const TextStyle(
+              color: Colors.white54,
+              fontWeight: FontWeight.bold,
+            ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
                 color: Colors.transparent,
@@ -68,7 +73,9 @@ class SearchBarWidget extends StatelessWidget {
               controller.searchData('');
             }
           },
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: controller.isDarkMode.value ? Colors.black : Colors.white,
+          ),
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:dev_dictionary/src/views/detail/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/word_data.dart';
+import '../controllers/word_data_controller.dart';
 
 class SearchResultWidget extends StatelessWidget {
   const SearchResultWidget({Key? key}) : super(key: key);

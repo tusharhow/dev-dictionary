@@ -11,12 +11,13 @@ class WordDataController extends GetxController {
   void onInit() {
     getShuffledWordData();
     getBookmarkedWords();
+    getFontSize();
+    getTheme();
     super.onInit();
   }
 
   final TextEditingController searchController = TextEditingController();
 
-  var wordList = <WordModel>[].obs;
   var isLoading = false.obs;
   var wordData = <Word>[];
 
@@ -101,6 +102,42 @@ class WordDataController extends GetxController {
     prefs.setStringList('bookmarkedWords',
         [for (var word in bookmarkedWords) json.encode(word.toJson())]);
     isBookmarked(false);
+    update();
+  }
+
+  // change theme and save to local storage
+  var isDarkMode = false.obs;
+
+  Future<void> changeTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isDarkMode.toggle();
+    prefs.setBool('isDarkMode', isDarkMode.value);
+    print(isDarkMode.value);
+    update();
+  }
+
+  // get theme from local storage
+  Future<void> getTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isDarkMode(prefs.getBool('isDarkMode') ?? false);
+    print(isDarkMode.value);
+    update();
+  }
+
+  // change font size and save to local storage
+  var fontSize = 16.0.obs;
+
+  Future<void> changeFontSize(double size) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    fontSize(size);
+    prefs.setDouble('fontSize', fontSize.value);
+    update();
+  }
+
+  // get font size from local storage
+  Future<void> getFontSize() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    fontSize(prefs.getDouble('fontSize') ?? 16.0);
     update();
   }
 }

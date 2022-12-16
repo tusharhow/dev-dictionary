@@ -1,3 +1,4 @@
+import 'package:dev_dictionary/src/views/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,7 +47,9 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const SettingsScreen());
+            },
             leading: const Icon(
               Icons.settings,
               color: Colors.white,
@@ -63,12 +66,27 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             onTap: () {},
             leading: const Icon(
-              Icons.info,
+              Icons.info_outline,
               color: Colors.white,
               size: 30,
             ),
             title: const Text(
-              'About',
+              'About Us',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: defaultPadding,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {},
+            leading: const Icon(
+              Icons.contact_mail,
+              color: Colors.white,
+              size: 30,
+            ),
+            title: const Text(
+              'Contact Us',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: defaultPadding,

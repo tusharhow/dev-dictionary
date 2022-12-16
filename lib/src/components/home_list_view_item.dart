@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants.dart';
-import '../controllers/word_data.dart';
+import '../controllers/word_data_controller.dart';
 import '../views/detail/detail_screen.dart';
 
 class HomeListViewItem extends StatelessWidget {
@@ -42,16 +42,20 @@ class HomeListViewItem extends StatelessWidget {
                       child: Container(
                         height: 70,
                         decoration: BoxDecoration(
-                          color: bgColor2,
+                          color: controller.isDarkMode.value
+                              ? const Color.fromARGB(255, 126, 138, 199)
+                              : bgColor2,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Center(
                           child: Text(
                             word.en.toUpperCase(),
                             style: GoogleFonts.openSans(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                              fontSize: controller.fontSize.value,
+                              fontWeight: FontWeight.w700,
+                              color: controller.isDarkMode.value
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                           ),
                         ),
