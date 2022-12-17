@@ -1,4 +1,3 @@
-import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
