@@ -1,9 +1,11 @@
+import 'package:dev_dictionary/src/views/about/about_us.dart';
 import 'package:dev_dictionary/src/views/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants.dart';
+import '../views/about/contact_us.dart';
 import '../views/bookmark/bookmark_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -64,7 +66,9 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const AboutUsScreen());
+            },
             leading: const Icon(
               Icons.info_outline,
               color: Colors.white,
@@ -79,7 +83,9 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const ContactUsScreen());
+            },
             leading: const Icon(
               Icons.contact_mail,
               color: Colors.white,
