@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../constants.dart';
 import '../models/word_model.dart';
+import '../services/network_service.dart';
 
 class WordDataController extends GetxController {
   @override
@@ -19,26 +20,13 @@ class WordDataController extends GetxController {
 
   final TextEditingController searchController = TextEditingController();
 
-  var isLoading = false.obs;
   var wordData = <Word>[].obs;
 
   Future<List<Word>> getShuffledWordData() async {
-    isLoading(true);
-    update();
-
-    final response = await http.get(Uri.parse(BASE_URL));
-    if (response.statusCode == 200) {
-      var jsonResponse = json.decode(response.body);
-      var data = WordModel.fromJson(jsonResponse);
-      wordData(data.words);
-      isLoading(false);
-      update();
-      return wordData;
-    } else {
-      throw Exception('Failed to load word');
-    }
-
-    isLoading(false);
+    final response = await NetworkService.get(BASE_URL);
+    var jsonResponse = json.decode(response.body);
+    var data = WordModel.fromJson(jsonResponse);
+    wordData(data.words);
     update();
     return wordData;
   }
@@ -172,5 +160,10 @@ class WordDataController extends GetxController {
     }
   }
 
-
+  // copy to clipboard
+  Future<void> copyToClipboard(String text, context) async {
+    await Clipboard.setData(ClipboardData(text: text)).then((value) =>
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Copied to Clipboard'))));
+  }
 }

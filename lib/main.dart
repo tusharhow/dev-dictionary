@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     final theme = Get.put(WordDataController());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Dev Dictionary',
       theme: theme.isDarkMode.value
           ? ThemeData.dark(useMaterial3: true)
           : ThemeData.light(useMaterial3: true),

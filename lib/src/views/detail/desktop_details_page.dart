@@ -1,11 +1,8 @@
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
-
 import '../../../constants.dart';
 
 class BigScreenDetailsPage extends StatelessWidget {
@@ -83,15 +80,9 @@ class BigScreenDetailsPage extends StatelessWidget {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           GestureDetector(
-                                            onTap: () async {
-                                              await Clipboard.setData(
-                                                      ClipboardData(
-                                                          text: word.detail))
-                                                  .then((value) => ScaffoldMessenger
-                                                          .of(context)
-                                                      .showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              'Copied to Clipboard'))));
+                                            onTap: () {
+                                              controller.copyToClipboard(
+                                                  word.bn, context);
                                             },
                                             child: Container(
                                               height: 45,
