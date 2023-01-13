@@ -8,8 +8,8 @@ import '../../components/search_bar_widget.dart';
 import '../../components/search_result_widget.dart';
 import '../../controllers/word_data_controller.dart';
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
+class MobileView extends StatelessWidget {
+  MobileView({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -36,6 +36,19 @@ class MyHomePage extends StatelessWidget {
                   height: 25,
                 ),
               ),
+              actions: [
+                GetBuilder<WordDataController>(
+                    builder: (controller) => IconButton(
+                        icon: Icon(
+                          controller.isDarkMode.value
+                              ? Icons.dark_mode
+                              : Icons.light_mode,
+                          color: controller.isDarkMode.value
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                        onPressed: () => controller.toggleDarkMode())),
+              ],
             ),
             body: GetBuilder<WordDataController>(
                 init: WordDataController(),

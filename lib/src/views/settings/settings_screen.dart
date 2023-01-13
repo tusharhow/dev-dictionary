@@ -46,33 +46,6 @@ class SettingsScreen extends StatelessWidget {
                   return Column(
                     children: [
                       const SizedBox(height: defaultPadding),
-                      // ListTile(
-                      //   onTap: () {
-                      //     //  controller.changeTheme();
-                      //     // change theme dialog
-                      //     showDialog(
-                      //       context: context,
-                      //       builder: (BuildContext context) =>
-                      //           changeThemePopupDialog(context),
-                      //     );
-                      //   },
-                      //   leading: Icon(
-                      //     Icons.lightbulb_outline,
-                      //     color: controller.isDarkMode.value
-                      //         ? Colors.black
-                      //         : Colors.white,
-                      //     size: 30,
-                      //   ),
-                      //   title: Text(
-                      //     'Change Theme',
-                      //     style: TextStyle(
-                      //       color: controller.isDarkMode.value
-                      //           ? Colors.black
-                      //           : Colors.white,
-                      //       fontSize: controller.fontSize.value,
-                      //     ),
-                      //   ),
-                      // ),
                       Padding(
                         padding: const EdgeInsets.only(left: defaultPadding),
                         child: Row(
@@ -109,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
                                 PopupMenuItem(
                                   onTap: () {
                                     controller.isDarkMode.value == true
-                                        ? controller.changeTheme()
+                                        ? controller.toggleDarkMode()
                                         : null;
                                   },
                                   value: "Dark Theme",
@@ -124,7 +97,7 @@ class SettingsScreen extends StatelessWidget {
                                 PopupMenuItem(
                                   onTap: () {
                                     controller.isDarkMode.value == false
-                                        ? controller.changeTheme()
+                                        ? controller.toggleDarkMode()
                                         : null;
                                   },
                                   value: "Light Theme",
@@ -258,7 +231,7 @@ class SettingsScreen extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     controller.isDarkMode.value == true
-                        ? controller.changeTheme()
+                        ? controller.toggleDarkMode()
                         : null;
                     Navigator.pop(context);
                   },
@@ -282,7 +255,7 @@ class SettingsScreen extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     controller.isDarkMode.value == false
-                        ? controller.changeTheme()
+                        ? controller.toggleDarkMode()
                         : null;
                     Navigator.pop(context);
                   },

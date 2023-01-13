@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../constants.dart';
 import '../models/word_model.dart';
 
@@ -19,7 +20,7 @@ class WordDataController extends GetxController {
   final TextEditingController searchController = TextEditingController();
 
   var isLoading = false.obs;
-  var wordData = <Word>[];
+  var wordData = <Word>[].obs;
 
   Future<List<Word>> getShuffledWordData() async {
     isLoading(true);
@@ -29,12 +30,12 @@ class WordDataController extends GetxController {
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
       var data = WordModel.fromJson(jsonResponse);
-      var wordList = data.words;
-
-      wordData = wordList;
+      wordData(data.words);
+      isLoading(false);
       update();
+      return wordData;
     } else {
-      throw Exception('Failed to load data');
+      throw Exception('Failed to load word');
     }
 
     isLoading(false);
@@ -65,6 +66,22 @@ class WordDataController extends GetxController {
     isSearching(false);
     update();
     return searhResults;
+  }
+
+  // related by first 3 letters
+  var relatedWords = <Word>[].obs;
+  Future<List<Word>> getRelatedWords(String word) async {
+    relatedWords.clear();
+    for (var wordDetail in wordData) {
+      if (wordDetail.bn.toLowerCase().contains(word.toLowerCase()) ||
+          wordDetail.en.toLowerCase().contains(word.toLowerCase()) ||
+          wordDetail.detail.toLowerCase().contains(word.toLowerCase())) {
+        relatedWords.remove(wordDetail);
+        relatedWords.add(wordDetail);
+      }
+    }
+    update();
+    return relatedWords;
   }
 
   // add bookmark and save to local storage
@@ -107,20 +124,24 @@ class WordDataController extends GetxController {
 
   // change theme and save to local storage
   var isDarkMode = false.obs;
-
-  Future<void> changeTheme() async {
+  void toggleDarkMode() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isDarkMode.toggle();
+    Get.changeTheme(isDarkMode.value
+        ? ThemeData.dark(useMaterial3: true)
+        : ThemeData.light(useMaterial3: true));
     prefs.setBool('isDarkMode', isDarkMode.value);
-    print(isDarkMode.value);
+
     update();
   }
 
-  // get theme from local storage
+// get theme from local storage
   Future<void> getTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isDarkMode(prefs.getBool('isDarkMode') ?? false);
-    print(isDarkMode.value);
+    Get.changeTheme(isDarkMode.value
+        ? ThemeData.dark(useMaterial3: true)
+        : ThemeData.light(useMaterial3: true));
     update();
   }
 
@@ -140,4 +161,16 @@ class WordDataController extends GetxController {
     fontSize(prefs.getDouble('fontSize') ?? 16.0);
     update();
   }
+
+// 'https://github.com/tusharhow/dev-dictionary'
+
+  Future urlLauncher(String uri) async {
+    if (await canLaunchUrl(Uri.parse(uri))) {
+      await launchUrl(Uri.parse(uri));
+    } else {
+      throw 'Could not launch $uri';
+    }
+  }
+
+
 }

@@ -1,9 +1,14 @@
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
+import 'package:dev_dictionary/src/views/devices/desktop_view.dart';
+import 'package:dev_dictionary/src/views/devices/tablet_view.dart';
+import 'package:dev_dictionary/src/views/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'src/views/home_page/homepage.dart';
+import 'package:url_strategy/url_strategy.dart';
+import 'src/views/devices/mobile_view.dart';
 
-void main() {
+void main() async {
+  setPathUrlStrategy();
   runApp(const MyApp());
 }
 
@@ -18,7 +23,11 @@ class MyApp extends StatelessWidget {
       theme: theme.isDarkMode.value
           ? ThemeData.dark(useMaterial3: true)
           : ThemeData.light(useMaterial3: true),
-      home: MyHomePage(),
+      home: Responsive(
+        mobile: MobileView(),
+        tablet: const TabletView(),
+        desktop: const DesktopView(),
+      ),
     );
   }
 }
