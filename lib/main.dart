@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'src/views/devices/mobile_view.dart';
 
-void main() async {
+Future<void> main() async {
   setPathUrlStrategy();
   runApp(const MyApp());
 }
