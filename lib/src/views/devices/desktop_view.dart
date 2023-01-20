@@ -169,8 +169,7 @@ class DesktopView extends StatelessWidget {
                                                         : Colors.black45,
                                                   )),
                                               onTap: () {
-                                                postController
-                                                    .getRelatedWords('funnl');
+                                               
                                                 postController.update();
                                                 Navigator.push(
                                                   context,
@@ -236,8 +235,7 @@ class DesktopView extends StatelessWidget {
                                                       ? Colors.black12
                                                       : Colors.white,
                                               onTap: () {
-                                                postController
-                                                    .getRelatedWords(topic.en);
+                                                
                                                 postController.update();
                                                 Navigator.push(
                                                   context,

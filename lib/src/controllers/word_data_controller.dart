@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class WordDataController extends GetxController {
     getBookmarkedWords();
     getFontSize();
     getTheme();
+    getRandomWord();
     super.onInit();
   }
 
@@ -54,22 +56,6 @@ class WordDataController extends GetxController {
     isSearching(false);
     update();
     return searhResults;
-  }
-
-  // related by first 3 letters
-  var relatedWords = <Word>[].obs;
-  Future<List<Word>> getRelatedWords(String word) async {
-    relatedWords.clear();
-    for (var wordDetail in wordData) {
-      if (wordDetail.bn.toLowerCase().contains(word.toLowerCase()) ||
-          wordDetail.en.toLowerCase().contains(word.toLowerCase()) ||
-          wordDetail.detail.toLowerCase().contains(word.toLowerCase())) {
-        relatedWords.remove(wordDetail);
-        relatedWords.add(wordDetail);
-      }
-    }
-    update();
-    return relatedWords;
   }
 
   // add bookmark and save to local storage
@@ -165,5 +151,16 @@ class WordDataController extends GetxController {
     await Clipboard.setData(ClipboardData(text: text)).then((value) =>
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Copied to Clipboard'))));
+  }
+
+  var randomWords = <Word>[].obs;
+
+  Future<List<Word>> getRandomWord() async {
+    final response = await NetworkService.get(BASE_URL);
+    var jsonResponse = json.decode(response.body);
+    var data = WordModel.fromJson(jsonResponse);
+    randomWords(data.words);
+    update();
+    return wordData;
   }
 }

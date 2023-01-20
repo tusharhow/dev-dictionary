@@ -200,56 +200,63 @@ class BigScreenDetailsPage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            // SizedBox(
-                            //   height: 200,
-                            //   child: ListView.builder(
-                            //     scrollDirection: Axis.horizontal,
-                            //     itemCount: controller.relatedWords.length,
-                            //     itemBuilder: (context, index) {
-                            //       return GestureDetector(
-                            //         onTap: () {},
-                            //         child: Padding(
-                            //           padding: const EdgeInsets.symmetric(
-                            //               horizontal: defaultPadding),
-                            //           child: Container(
-                            //             width: 150,
-                            //             decoration: BoxDecoration(
-                            //               color: bgColor2,
-                            //               borderRadius:
-                            //                   BorderRadius.circular(10),
-                            //             ),
-                            //             child: Padding(
-                            //               padding: const EdgeInsets.all(20.0),
-                            //               child: Column(
-                            //                 mainAxisAlignment:
-                            //                     MainAxisAlignment.center,
-                            //                 children: [
-                            //                   Text(
-                            //                     controller
-                            //                         .relatedWords[index].bn,
-                            //                     style: const TextStyle(
-                            //                       fontSize: 20,
-                            //                       color: Colors.red,
-                            //                     ),
-                            //                   ),
-                            //                   const SizedBox(height: 10),
-                            //                   Text(
-                            //                     controller
-                            //                         .relatedWords[index].en,
-                            //                     style: const TextStyle(
-                            //                       fontSize: 15,
-                            //                       color: Colors.red,
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       );
-                            //     },
-                            //   ),
-                            // ),
+                            SizedBox(
+                              height: 400,
+                              child: FutureBuilder<List<Word>>(
+                                  future: controller.getRandomWord(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: 3,
+                                        itemBuilder: (context, index) {
+                                          final word =
+                                              controller.randomWords[index];
+
+                                          return GestureDetector(
+                                            onTap: () {},
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 12),
+                                              child: Container(
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                  color: controller
+                                                          .isDarkMode.value
+                                                      ? bgColor2
+                                                      : Colors.blue.shade100,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      20.0),
+                                                  child: Center(
+                                                    child: Text(
+                                                      word.en,
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        color: controller
+                                                                .isDarkMode
+                                                                .value
+                                                            ? Colors.white
+                                                            : Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  }),
+                            ),
                           ],
                         ),
                       ),
