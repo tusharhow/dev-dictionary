@@ -5,4 +5,4 @@ const bgColor2 = Color(0xff162544);
 const defaultPadding = 16.0;
 
 const BASE_URL =
-    'https://raw.githubusercontent.com/tusharhow/dev-dictionary/main/lib/src/data/dev_dictionary_data.json';
+    'https://raw.githubusercontent.com/tusharhow/dev-dictionary-data/main/dev_dictionary_data.json';
