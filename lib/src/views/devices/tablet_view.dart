@@ -8,7 +8,8 @@ import '../../models/word_model.dart';
 import '../detail/desktop_details_page.dart';
 
 class TabletView extends StatelessWidget {
-  const TabletView({Key? key}) : super(key: key);
+    TabletView({Key? key}) : super(key: key);
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +20,7 @@ class TabletView extends StatelessWidget {
               final postController = Get.put(WordDataController());
               return Column(
                 children: [
-                  TopHeaderDesktop(controller: controller),
+                  TopHeaderDesktop( ),
                   const SizedBox(height: 30),
                   Center(
                     child: Text(
@@ -27,9 +28,7 @@ class TabletView extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 70,
                         fontWeight: FontWeight.bold,
-                        color: controller.isDarkMode.value
-                            ? Colors.white
-                            : Colors.black,
+                        color:Colors.black,
                         fontFamily: 'Borno',
                       ),
                     ),
@@ -40,9 +39,7 @@ class TabletView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Borno',
-                      color: controller.isDarkMode.value
-                          ? Colors.white60
-                          : Colors.black54,
+                      color: Colors.black54,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -56,9 +53,7 @@ class TabletView extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: TextFormField(
                           style: TextStyle(
-                              color: controller.isDarkMode.value
-                                  ? Colors.white54
-                                  : Colors.black45),
+                              color: Colors.black45),
                           onChanged: (String query) {
                             if (query.isNotEmpty) {
                               postController.searchData(query.trim());
@@ -74,9 +69,7 @@ class TabletView extends StatelessWidget {
                                 vertical: 16, horizontal: 16),
                             hintText: 'কীসের উপর সার্চ করতে চান?',
                             hintStyle: TextStyle(
-                                color: controller.isDarkMode.value
-                                    ? Colors.white54
-                                    : Colors.black38),
+                                color:   Colors.black38),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent),
                               borderRadius:
@@ -98,9 +91,7 @@ class TabletView extends StatelessWidget {
                                     },
                                     icon: Icon(
                                       Icons.clear,
-                                      color: controller.isDarkMode.value
-                                          ? Colors.white54
-                                          : Colors.black38,
+                                      color:  Colors.black38,
                                     ),
                                   ),
                           ),
@@ -154,9 +145,7 @@ class TabletView extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontFamily: 'Borno',
-                                              color: controller.isDarkMode.value
-                                                  ? Colors.white54
-                                                  : Colors.black45,
+                                              color:   Colors.black45,
                                             )),
                                         onTap: () {
                                           Navigator.push(
@@ -208,18 +197,12 @@ class TabletView extends StatelessWidget {
                                               fontSize: 22,
                                               fontFamily: 'Borno',
                                               fontWeight: FontWeight.bold,
-                                              color: controller.isDarkMode.value
-                                                  ? Colors.white60
-                                                  : Colors.black54,
+                                              color:   Colors.black54,
                                             ),
                                           ),
                                         ),
-                                        hoverColor: controller.isDarkMode.value
-                                            ? Colors.blue.shade300
-                                            : Colors.blue.shade100,
-                                        tileColor: controller.isDarkMode.value
-                                            ? Colors.black12
-                                            : Colors.white,
+                                        hoverColor:  Colors.blue.shade100,
+                                        tileColor:   Colors.white,
                                         onTap: () {
                                           Navigator.push(
                                             context,

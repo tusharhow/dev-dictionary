@@ -1,4 +1,5 @@
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
+import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
@@ -6,19 +7,19 @@ import '../../../constants.dart';
 import '../../components/popup_widget.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  SettingsScreen({Key? key}) : super(key: key);
 
+  final WordPropertyController wordPropertyController =
+      Get.put(WordPropertyController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WordDataController>(
         init: WordDataController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor:
-                controller.isDarkMode.value ? Colors.white : bgColor,
+            backgroundColor: bgColor,
             appBar: AppBar(
-              backgroundColor:
-                  controller.isDarkMode.value ? Colors.white : bgColor,
+              backgroundColor: bgColor,
               elevation: 0,
               leading: IconButton(
                 onPressed: () {
@@ -26,17 +27,15 @@ class SettingsScreen extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.arrow_back,
-                  color:
-                      controller.isDarkMode.value ? Colors.black : Colors.white,
+                  color: Colors.white,
                   size: 25,
                 ),
               ),
               title: Text(
                 'Settings',
                 style: TextStyle(
-                  color:
-                      controller.isDarkMode.value ? Colors.black : Colors.white,
-                  fontSize: controller.fontSize.value,
+                  color: Colors.white,
+                  fontSize: wordPropertyController.fontSize.value,
                 ),
               ),
             ),
@@ -45,75 +44,6 @@ class SettingsScreen extends StatelessWidget {
                 builder: (controller) {
                   return Column(
                     children: [
-                      const SizedBox(height: defaultPadding),
-                      Padding(
-                        padding: const EdgeInsets.only(left: defaultPadding),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.lightbulb_outline,
-                              color: controller.isDarkMode.value
-                                  ? Colors.black
-                                  : Colors.white,
-                              size: 30,
-                            ),
-                            const SizedBox(width: 25),
-                            PopupMenuButton(
-                              onSelected: (value) {},
-                              initialValue: controller.isDarkMode.value
-                                  ? "Dark Theme"
-                                  : "Light Theme",
-                              splashRadius: 10,
-                              tooltip: controller.isDarkMode.value
-                                  ? "Dark Theme"
-                                  : "Light Theme",
-                              onCanceled: () {},
-                              color: controller.isDarkMode.value
-                                  ? Colors.black
-                                  : Colors.white,
-                              child: Text("Change Theme",
-                                  style: TextStyle(
-                                    color: controller.isDarkMode.value
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: controller.fontSize.value,
-                                  )),
-                              itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  onTap: () {
-                                    controller.isDarkMode.value == true
-                                        ? controller.toggleDarkMode()
-                                        : null;
-                                  },
-                                  value: "Dark Theme",
-                                  child: Text("Dark Theme",
-                                      style: TextStyle(
-                                        color: controller.isDarkMode.value
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontSize: controller.fontSize.value,
-                                      )),
-                                ),
-                                PopupMenuItem(
-                                  onTap: () {
-                                    controller.isDarkMode.value == false
-                                        ? controller.toggleDarkMode()
-                                        : null;
-                                  },
-                                  value: "Light Theme",
-                                  child: Text("Light Theme",
-                                      style: TextStyle(
-                                        color: controller.isDarkMode.value
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontSize: controller.fontSize.value,
-                                      )),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
                       ListTile(
                         onTap: () {
                           showDialog(
@@ -124,18 +54,14 @@ class SettingsScreen extends StatelessWidget {
                         },
                         leading: Icon(
                           Icons.format_size,
-                          color: controller.isDarkMode.value
-                              ? Colors.black
-                              : Colors.white,
+                          color:  Colors.white,
                           size: 30,
                         ),
                         title: Text(
                           'Change Font Size',
                           style: TextStyle(
-                            color: controller.isDarkMode.value
-                                ? Colors.black
-                                : Colors.white,
-                            fontSize: controller.fontSize.value,
+                            color: Colors.white,
+                            fontSize: wordPropertyController.fontSize.value,
                           ),
                         ),
                       ),
@@ -150,18 +76,14 @@ class SettingsScreen extends StatelessWidget {
                         },
                         leading: Icon(
                           Icons.share,
-                          color: controller.isDarkMode.value
-                              ? Colors.black
-                              : Colors.white,
+                          color:  Colors.white,
                           size: 30,
                         ),
                         title: Text(
                           'Share App',
                           style: TextStyle(
-                            color: controller.isDarkMode.value
-                                ? Colors.black
-                                : Colors.white,
-                            fontSize: controller.fontSize.value,
+                            color: Colors.white,
+                            fontSize: wordPropertyController.fontSize.value,
                           ),
                         ),
                       ),
@@ -169,18 +91,14 @@ class SettingsScreen extends StatelessWidget {
                         onTap: () {},
                         leading: Icon(
                           Icons.star,
-                          color: controller.isDarkMode.value
-                              ? Colors.black
-                              : Colors.white,
+                          color:  Colors.white,
                           size: 30,
                         ),
                         title: Text(
                           'Rate App',
                           style: TextStyle(
-                            color: controller.isDarkMode.value
-                                ? Colors.black
-                                : Colors.white,
-                            fontSize: controller.fontSize.value,
+                            color: Colors.white,
+                            fontSize: wordPropertyController.fontSize.value,
                           ),
                         ),
                       ),
@@ -188,18 +106,14 @@ class SettingsScreen extends StatelessWidget {
                         onTap: () {},
                         leading: Icon(
                           Icons.logout,
-                          color: controller.isDarkMode.value
-                              ? Colors.black
-                              : Colors.white,
+                          color:  Colors.white,
                           size: 30,
                         ),
                         title: Text(
                           'Logout',
                           style: TextStyle(
-                            color: controller.isDarkMode.value
-                                ? Colors.black
-                                : Colors.white,
-                            fontSize: controller.fontSize.value,
+                            color: Colors.white,
+                            fontSize: wordPropertyController.fontSize.value,
                           ),
                         ),
                       ),
@@ -210,75 +124,5 @@ class SettingsScreen extends StatelessWidget {
         });
   }
 
-  Widget changeThemePopupDialog(BuildContext context) {
-    return GetBuilder<WordDataController>(
-        init: WordDataController(),
-        builder: (controller) {
-          return AlertDialog(
-            backgroundColor:
-                controller.isDarkMode.value ? Colors.white : bgColor,
-            title: Text(
-              'Change Theme',
-              style: TextStyle(
-                color:
-                    controller.isDarkMode.value ? Colors.black : Colors.white,
-                fontSize: controller.fontSize.value,
-              ),
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListTile(
-                  onTap: () {
-                    controller.isDarkMode.value == true
-                        ? controller.toggleDarkMode()
-                        : null;
-                    Navigator.pop(context);
-                  },
-                  leading: Icon(
-                    Icons.lightbulb_outline,
-                    color: controller.isDarkMode.value
-                        ? Colors.black
-                        : Colors.white,
-                    size: 30,
-                  ),
-                  title: Text(
-                    'Dark Mode',
-                    style: TextStyle(
-                      color: controller.isDarkMode.value
-                          ? Colors.black
-                          : Colors.white,
-                      fontSize: controller.fontSize.value,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    controller.isDarkMode.value == false
-                        ? controller.toggleDarkMode()
-                        : null;
-                    Navigator.pop(context);
-                  },
-                  leading: Icon(
-                    Icons.lightbulb_outline,
-                    color: controller.isDarkMode.value
-                        ? Colors.black
-                        : Colors.white,
-                    size: 30,
-                  ),
-                  title: Text(
-                    'Light Mode',
-                    style: TextStyle(
-                      color: controller.isDarkMode.value
-                          ? Colors.black
-                          : Colors.white,
-                      fontSize: controller.fontSize.value,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
-  }
+  
 }

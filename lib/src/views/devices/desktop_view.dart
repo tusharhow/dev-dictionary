@@ -8,7 +8,7 @@ import '../../models/word_model.dart';
 import '../detail/desktop_details_page.dart';
 
 class DesktopView extends StatelessWidget {
-  const DesktopView({Key? key}) : super(key: key);
+  DesktopView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class DesktopView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 200),
                     child: Column(
                       children: [
-                        TopHeaderDesktop(controller: controller),
+                        TopHeaderDesktop(),
                         const SizedBox(height: 50),
                         Center(
                           child: Text(
@@ -32,9 +32,7 @@ class DesktopView extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 70,
                               fontWeight: FontWeight.bold,
-                              color: controller.isDarkMode.value
-                                  ? Colors.white
-                                  : Colors.black,
+                              color: Colors.black,
                               fontFamily: 'Borno',
                             ),
                           ),
@@ -45,9 +43,7 @@ class DesktopView extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 23,
                             fontFamily: 'Borno',
-                            color: controller.isDarkMode.value
-                                ? Colors.white60
-                                : Colors.black54,
+                            color: Colors.black54,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -60,10 +56,7 @@ class DesktopView extends StatelessWidget {
                               height: 55,
                               width: MediaQuery.of(context).size.width / 3,
                               child: TextFormField(
-                                style: TextStyle(
-                                    color: controller.isDarkMode.value
-                                        ? Colors.white
-                                        : Colors.black45),
+                                style: TextStyle(color: Colors.black45),
                                 onChanged: (String query) {
                                   if (query.isNotEmpty) {
                                     postController.searchData(query.trim());
@@ -79,9 +72,7 @@ class DesktopView extends StatelessWidget {
                                       vertical: 16, horizontal: 16),
                                   hintText: 'কীসের উপর সার্চ করতে চান?',
                                   hintStyle: TextStyle(
-                                    color: controller.isDarkMode.value
-                                        ? Colors.white54
-                                        : Colors.black45,
+                                    color: Colors.black45,
                                   ),
                                   enabledBorder: const OutlineInputBorder(
                                     borderSide:
@@ -106,9 +97,7 @@ class DesktopView extends StatelessWidget {
                                             controller.update();
                                           },
                                           icon: Icon(Icons.clear,
-                                              color: controller.isDarkMode.value
-                                                  ? Colors.white
-                                                  : Colors.black45),
+                                              color: Colors.black45),
                                         ),
                                 ),
                               ),
@@ -163,13 +152,9 @@ class DesktopView extends StatelessWidget {
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     fontFamily: 'Borno',
-                                                    color: controller
-                                                            .isDarkMode.value
-                                                        ? Colors.white54
-                                                        : Colors.black45,
+                                                    color: Colors.black45,
                                                   )),
                                               onTap: () {
-                                               
                                                 postController.update();
                                                 Navigator.push(
                                                   context,
@@ -219,23 +204,13 @@ class DesktopView extends StatelessWidget {
                                                     fontSize: 20,
                                                     fontFamily: 'Borno',
                                                     fontWeight: FontWeight.bold,
-                                                    color: controller
-                                                            .isDarkMode.value
-                                                        ? Colors.white60
-                                                        : Colors.black54,
+                                                    color: Colors.black54,
                                                   ),
                                                 ),
                                               ),
-                                              hoverColor:
-                                                  controller.isDarkMode.value
-                                                      ? Colors.blue.shade300
-                                                      : Colors.blue.shade100,
-                                              tileColor:
-                                                  controller.isDarkMode.value
-                                                      ? Colors.black12
-                                                      : Colors.white,
+                                              hoverColor: Colors.blue.shade100,
+                                              tileColor: Colors.white,
                                               onTap: () {
-                                                
                                                 postController.update();
                                                 Navigator.push(
                                                   context,

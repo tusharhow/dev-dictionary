@@ -23,7 +23,7 @@ class DrawerWidget extends StatelessWidget {
           Center(
             child: Text(
               'Dev Dictionary',
-              style: GoogleFonts.oswald(
+              style: GoogleFonts.playfairDisplay(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -33,35 +33,35 @@ class DrawerWidget extends StatelessWidget {
           const SizedBox(height: 50),
           ListTile(
             onTap: () {
-              Get.to(() => const BookMarkScreen());
+              Get.to(() => BookMarkScreen());
             },
             leading: const Icon(
               Icons.bookmark,
               color: Colors.white,
-              size: 30,
+              size: 25,
             ),
-            title: const Text(
+            title: Text(
               'Bookmark',
-              style: TextStyle(
+              style: GoogleFonts.inter(
                 color: Colors.white,
-                fontSize: defaultPadding,
+                fontSize: 16,
               ),
             ),
           ),
           ListTile(
             onTap: () {
-              Get.to(() => const SettingsScreen());
+              Get.to(() =>   SettingsScreen());
             },
             leading: const Icon(
               Icons.settings,
               color: Colors.white,
-              size: 30,
+              size: 25,
             ),
-            title: const Text(
+            title: Text(
               'Settings',
-              style: TextStyle(
+              style: GoogleFonts.inter(
                 color: Colors.white,
-                fontSize: defaultPadding,
+                fontSize: 16,
               ),
             ),
           ),
@@ -72,13 +72,13 @@ class DrawerWidget extends StatelessWidget {
             leading: const Icon(
               Icons.info_outline,
               color: Colors.white,
-              size: 30,
+              size: 25,
             ),
-            title: const Text(
+            title: Text(
               'About Us',
-              style: TextStyle(
+              style: GoogleFonts.inter(
                 color: Colors.white,
-                fontSize: defaultPadding,
+                fontSize: 16,
               ),
             ),
           ),
@@ -89,13 +89,13 @@ class DrawerWidget extends StatelessWidget {
             leading: const Icon(
               Icons.contact_mail,
               color: Colors.white,
-              size: 30,
+              size: 25,
             ),
-            title: const Text(
+            title: Text(
               'Contact Us',
-              style: TextStyle(
+              style: GoogleFonts.inter(
                 color: Colors.white,
-                fontSize: defaultPadding,
+                fontSize: 16,
               ),
             ),
           ),

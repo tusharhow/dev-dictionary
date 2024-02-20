@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../constants.dart';
 import '../controllers/word_data_controller.dart';
 
@@ -11,6 +10,7 @@ class SearchBarWidget extends StatelessWidget {
   }) : super(key: key);
   final TextEditingController textEditingController;
   final WordDataController controller;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,25 +22,22 @@ class SearchBarWidget extends StatelessWidget {
           controller: textEditingController,
           decoration: InputDecoration(
             filled: true,
-            fillColor: controller.isDarkMode.value
-                ? const Color.fromARGB(255, 79, 89, 141)
-                : bgColor2,
+            fillColor: bgColor2,
             hintText: 'কিছু লিখুন...',
             hintStyle: const TextStyle(
-              color: Colors.white54,
-              fontWeight: FontWeight.bold,
+              color: Colors.grey,
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
                 color: Colors.transparent,
               ),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(12),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(
                 color: Colors.transparent,
               ),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(12),
             ),
             suffixIcon: textEditingController.text.isNotEmpty
                 ? IconButton(
@@ -73,8 +70,8 @@ class SearchBarWidget extends StatelessWidget {
               controller.searchData('');
             }
           },
-          style: TextStyle(
-            color: controller.isDarkMode.value ? Colors.black : Colors.white,
+          style: const TextStyle(
+            color: Colors.white,
           ),
         ),
       ),

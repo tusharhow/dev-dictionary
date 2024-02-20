@@ -1,6 +1,7 @@
 import 'package:dev_dictionary/src/views/detail/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../controllers/word_data_controller.dart';
 
 class SearchResultWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class SearchResultWidget extends StatelessWidget {
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: EdgeInsets.only(left: 20, top: 16),
                   child: Text(
                     'সার্চ রেজাল্ট সমূহ',
                     style: TextStyle(
@@ -42,39 +43,46 @@ class SearchResultWidget extends StatelessWidget {
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return ListTile(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => DetailScreen(
-                                        word: wordDataController
-                                            .searhResults[index],
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blueGrey[600],
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailScreen(
+                                          word: wordDataController
+                                              .searhResults[index],
+                                        ),
                                       ),
+                                    );
+                                  },
+                                  title: Text(
+                                    wordDataController.searhResults[index].en,
+                                    style: GoogleFonts.inter(
+                                      fontSize: 18,
+                                      color: Colors.white,
                                     ),
-                                  );
-                                },
-                                title: Text(
-                                  wordDataController.searhResults[index].en,
-                                  style: const TextStyle(
-                                    fontSize: 18,
+                                  ),
+                                  subtitle: Text(
+                                    wordDataController
+                                        .searhResults[index].detail,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white54,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+                                  leading: const Icon(
+                                    Icons.search,
                                     color: Colors.white,
                                   ),
-                                ),
-                                subtitle: Text(
-                                  wordDataController.searhResults[index].detail,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white54,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  maxLines: 2,
-                                ),
-                                leading: const Icon(
-                                  Icons.search,
-                                  color: Colors.white,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
                                 ),
                               );
                             }

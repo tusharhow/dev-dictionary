@@ -1,4 +1,6 @@
+import 'package:dev_dictionary/src/controllers/bookmark_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
+import 'package:dev_dictionary/src/models/bookmark_model.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -6,26 +8,21 @@ import 'package:get/get.dart';
 import '../../../constants.dart';
 
 class BigScreenDetailsPage extends StatelessWidget {
-  const BigScreenDetailsPage({Key? key, required this.word}) : super(key: key);
+  BigScreenDetailsPage({Key? key, required this.word}) : super(key: key);
   final Word word;
+  final WordDataController wordDataController = Get.put(WordDataController());
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<WordDataController>(
-        init: WordDataController(),
+    return GetBuilder<BookmarkController>(
+        init: BookmarkController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor:
-                controller.isDarkMode.value ? bgColor : Colors.white,
             appBar: AppBar(
-                backgroundColor:
-                    controller.isDarkMode.value ? bgColor : Colors.white,
                 elevation: 0,
                 title: Text(
                   word.en,
                   style: TextStyle(
-                    color: controller.isDarkMode.value
-                        ? Colors.white
-                        : Colors.black,
+                    color: Colors.black,
                   ),
                 ),
                 leading: IconButton(
@@ -34,18 +31,16 @@ class BigScreenDetailsPage extends StatelessWidget {
                   },
                   icon: Icon(
                     Icons.arrow_back_ios,
-                    color: controller.isDarkMode.value
-                        ? Colors.white
-                        : Colors.black,
+                    color: Colors.black,
                   ),
                 )),
             body: SingleChildScrollView(
-              child: GetBuilder<WordDataController>(
-                  init: WordDataController(),
+              child: GetBuilder<BookmarkController>(
+                  init: BookmarkController(),
                   builder: (controller) {
                     return Center(
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.5,
+                        width: MediaQuery.of(context).size.width / 1.9,
                         child: Column(
                           children: [
                             const SizedBox(height: defaultPadding),
@@ -81,8 +76,8 @@ class BigScreenDetailsPage extends StatelessWidget {
                                         children: [
                                           GestureDetector(
                                             onTap: () {
-                                              controller.copyToClipboard(
-                                                  word.bn, context);
+                                              // controller.copyToClipboard(
+                                              //     word.bn, context);
                                             },
                                             child: Container(
                                               height: 45,
@@ -124,35 +119,46 @@ class BigScreenDetailsPage extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              controller.addBookmark(word).then(
-                                                    (value) =>
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                      const SnackBar(
-                                                        content: Text(
-                                                            'Bookmark Added'),
-                                                      ),
-                                                    ),
-                                                  );
+                                              if (controller
+                                                  .isBookmarkSaved(word.id)) {
+                                                controller
+                                                    .removeBookmark(Bookmark(
+                                                  id: word.id,
+                                                  en: word.en,
+                                                  bn: word.bn,
+                                                  detail: word.detail,
+                                                ));
+                                              } else {
+                                                controller.addBookmark(Bookmark(
+                                                  id: word.id,
+                                                  en: word.en,
+                                                  bn: word.bn,
+                                                  detail: word.detail,
+                                                ));
+                                              }
                                             },
-                                            child: Container(
-                                              height: 45,
-                                              width: 45,
-                                              decoration: BoxDecoration(
-                                                color: controller
-                                                        .isBookmarked.value
-                                                    ? Colors.red.shade100
-                                                    : Colors
-                                                        .indigoAccent.shade100,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: const Icon(
-                                                Icons.bookmark,
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                                            child: Obx(() => Container(
+                                                  height: 45,
+                                                  width: 45,
+                                                  decoration: BoxDecoration(
+                                                    color: controller
+                                                            .isBookmarkSaved(
+                                                                word.id)
+                                                        ? Colors.red.shade100
+                                                        : Colors.indigoAccent
+                                                            .shade100,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  child: Icon(
+                                                    controller.isBookmarkSaved(
+                                                            word.id)
+                                                        ? Icons.bookmark
+                                                        : Icons.bookmark_border,
+                                                    color: Colors.white,
+                                                  ),
+                                                )),
                                           ),
                                         ],
                                       )
@@ -174,7 +180,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                   child: Text(
                                     word.detail,
                                     style: TextStyle(
-                                      fontSize: controller.fontSize.value,
+                                      fontSize: 20,
                                       color: Colors.white,
                                     ),
                                     textAlign: TextAlign.center,
@@ -192,9 +198,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                   'Related Words',
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: controller.isDarkMode.value
-                                        ? Colors.white
-                                        : Colors.black,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
@@ -203,15 +207,15 @@ class BigScreenDetailsPage extends StatelessWidget {
                             SizedBox(
                               height: 400,
                               child: FutureBuilder<List<Word>>(
-                                  future: controller.getRandomWord(),
+                                  future: wordDataController.getRandomWord(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       return ListView.builder(
                                         scrollDirection: Axis.vertical,
                                         itemCount: 3,
                                         itemBuilder: (context, index) {
-                                          final word =
-                                              controller.randomWords[index];
+                                          final word = wordDataController
+                                              .randomWords[index];
 
                                           return GestureDetector(
                                             onTap: () {},
@@ -222,10 +226,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                               child: Container(
                                                 width: 100,
                                                 decoration: BoxDecoration(
-                                                  color: controller
-                                                          .isDarkMode.value
-                                                      ? bgColor2
-                                                      : Colors.blue.shade100,
+                                                  color: Colors.blue.shade100,
                                                   borderRadius:
                                                       BorderRadius.circular(10),
                                                 ),
@@ -237,11 +238,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                                       word.en,
                                                       style: TextStyle(
                                                         fontSize: 18,
-                                                        color: controller
-                                                                .isDarkMode
-                                                                .value
-                                                            ? Colors.white
-                                                            : Colors.black,
+                                                        color: Colors.black,
                                                       ),
                                                     ),
                                                   ),

@@ -29,10 +29,9 @@ class FooterWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
-          const Text('Copyright © 2023 by Dev Dictionary',
+          const Text('Copyright © 2024 by Dev Dictionary',
               style: TextStyle(
                 fontSize: 16,
-                fontFamily: 'Borno',
                 color: Colors.white,
               )),
           const SizedBox(height: 5),
@@ -41,7 +40,6 @@ class FooterWidget extends StatelessWidget {
               text: 'Developed by ',
               style: const TextStyle(
                 fontSize: 16,
-                fontFamily: 'Borno',
                 color: Colors.white,
               ),
               children: [
@@ -49,7 +47,6 @@ class FooterWidget extends StatelessWidget {
                     text: 'Tushar Mahmud',
                     style: const TextStyle(
                       fontSize: 16,
-                      fontFamily: 'Borno',
                       color: Colors.deepOrange,
                       fontWeight: FontWeight.bold,
                     ),

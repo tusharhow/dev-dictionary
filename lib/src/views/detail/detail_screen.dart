@@ -1,47 +1,47 @@
 import 'package:dev_dictionary/constants.dart';
+import 'package:dev_dictionary/src/controllers/bookmark_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
+import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
+import 'package:dev_dictionary/src/models/bookmark_model.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key, required this.word}) : super(key: key);
+  DetailScreen({Key? key, required this.word}) : super(key: key);
   final Word word;
+  final WordPropertyController wordPropertyController =
+      Get.put(WordPropertyController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WordDataController>(
         init: WordDataController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor:
-                controller.isDarkMode.value ? Colors.white : bgColor,
+            backgroundColor: bgColor,
             appBar: AppBar(
-                backgroundColor:
-                    controller.isDarkMode.value ? Colors.white : bgColor,
+                backgroundColor: bgColor,
                 elevation: 0,
                 title: Text(
                   word.en,
-                  style: TextStyle(
-                    color: controller.isDarkMode.value
-                        ? Colors.black
-                        : Colors.white,
+                  style: const TextStyle(
+                    color: Colors.white,
                   ),
                 ),
                 leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back_ios,
-                    color: controller.isDarkMode.value
-                        ? Colors.black
-                        : Colors.white,
+                    color: Colors.white,
                   ),
                 )),
             body: SingleChildScrollView(
-              child: GetBuilder<WordDataController>(
-                  init: WordDataController(),
+              child: GetBuilder<BookmarkController>(
+                  init: BookmarkController(),
                   builder: (controller) {
                     return Column(
                       children: [
@@ -77,8 +77,9 @@ class DetailScreen extends StatelessWidget {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          controller.copyToClipboard(
-                                              word.bn, context);
+                                          wordPropertyController
+                                              .copyToClipboard(
+                                                  word.bn, context);
                                         },
                                         child: Container(
                                           height: 45,
@@ -118,32 +119,44 @@ class DetailScreen extends StatelessWidget {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          controller.addBookmark(word).then(
-                                                (value) => ScaffoldMessenger.of(
-                                                        context)
-                                                    .showSnackBar(
-                                                  const SnackBar(
-                                                    content:
-                                                        Text('Bookmark Added'),
-                                                  ),
-                                                ),
-                                              );
+                                          if (controller
+                                              .isBookmarkSaved(word.id)) {
+                                            controller.removeBookmark(Bookmark(
+                                              id: word.id,
+                                              en: word.en,
+                                              bn: word.bn,
+                                              detail: word.detail,
+                                            ));
+                                          } else {
+                                            controller.addBookmark(Bookmark(
+                                              id: word.id,
+                                              en: word.en,
+                                              bn: word.bn,
+                                              detail: word.detail,
+                                            ));
+                                          }
                                         },
-                                        child: Container(
-                                          height: 45,
-                                          width: 45,
-                                          decoration: BoxDecoration(
-                                            color: controller.isBookmarked.value
-                                                ? Colors.red.shade100
-                                                : Colors.indigoAccent.shade100,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: const Icon(
-                                            Icons.bookmark,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                        child: Obx(() => Container(
+                                              height: 45,
+                                              width: 45,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    controller.isBookmarkSaved(
+                                                            word.id)
+                                                        ? Colors.redAccent
+                                                        : Colors.indigoAccent
+                                                            .shade100,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Icon(
+                                                controller.isBookmarkSaved(
+                                                        word.id)
+                                                    ? Icons.bookmark
+                                                    : Icons.bookmark_border,
+                                                color: Colors.white,
+                                              ),
+                                            )),
                                       ),
                                     ],
                                   )
@@ -166,7 +179,8 @@ class DetailScreen extends StatelessWidget {
                               child: Text(
                                 word.detail,
                                 style: TextStyle(
-                                  fontSize: controller.fontSize.value,
+                                  fontSize:
+                                      wordPropertyController.fontSize.value,
                                   color: Colors.white,
                                 ),
                                 textAlign: TextAlign.center,

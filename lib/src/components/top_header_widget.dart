@@ -1,13 +1,14 @@
-import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
+import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:dev_dictionary/src/views/settings/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TopHeaderDesktop extends StatelessWidget {
-  const TopHeaderDesktop({Key? key, required this.controller})
-      : super(key: key);
-  final WordDataController controller;
+  TopHeaderDesktop({Key? key}) : super(key: key);
+
+  final WordPropertyController wordPropertyController =
+      Get.put(WordPropertyController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,12 +39,11 @@ class TopHeaderDesktop extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Text(
+              const Text(
                 'ডিকশনারি',
                 style: TextStyle(
                   fontSize: 25,
-                  color:
-                      controller.isDarkMode.value ? Colors.white : Colors.black,
+                  color: Colors.black,
                   fontFamily: 'Borno',
                   fontWeight: FontWeight.bold,
                 ),
@@ -55,54 +55,45 @@ class TopHeaderDesktop extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  controller.urlLauncher(
+                  wordPropertyController.urlLauncher(
                       'https://github.com/tusharhow/dev-dictionary');
                 },
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.star_border_rounded,
-                      color: controller.isDarkMode.value
-                          ? Colors.white60
-                          : Colors.black54,
+                      color: Colors.black54,
                     ),
                     const SizedBox(width: 5),
-                    Text(
+                    const Text(
                       'Github',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
-                        color: controller.isDarkMode.value
-                            ? Colors.white60
-                            : Colors.black54,
+                        color: Colors.black54,
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    GetBuilder<WordDataController>(
-                        builder: (controller) => IconButton(
-                            icon: Icon(
-                              controller.isDarkMode.value
-                                  ? Icons.dark_mode
-                                  : Icons.light_mode,
-                              color: controller.isDarkMode.value
-                                  ? Colors.white60
-                                  : Colors.black54,
-                            ),
-                            onPressed: () => controller.toggleDarkMode())),
                     const SizedBox(width: 20),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {
-                          return const SettingsScreen();
+                          return SettingsScreen();
                         }));
                       },
                       child: Image.asset(
                         'assets/icons/menu.png',
-                        color: controller.isDarkMode.value
-                            ? Colors.white60
-                            : Colors.black54,
+                        color: Colors.black54,
                         height: 25,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    const Text(
+                      'Settings',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
                       ),
                     ),
                   ],

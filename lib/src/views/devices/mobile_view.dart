@@ -1,5 +1,5 @@
 import 'package:dev_dictionary/constants.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../components/drawer_widget.dart';
@@ -11,6 +11,7 @@ import '../../controllers/word_data_controller.dart';
 class MobileView extends StatelessWidget {
   MobileView({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WordDataController>(
@@ -18,77 +19,73 @@ class MobileView extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             key: _scaffoldKey,
-            backgroundColor:
-                controller.isDarkMode.value ? Colors.white : bgColor,
+            backgroundColor: bgColor,
             drawer: const DrawerWidget(),
             appBar: AppBar(
               elevation: 0,
-              backgroundColor:
-                  controller.isDarkMode.value ? Colors.white : bgColor,
+              backgroundColor: Colors.blueGrey[600],
               leading: IconButton(
                 onPressed: () {
                   _scaffoldKey.currentState!.openDrawer();
                 },
                 icon: Image.asset(
                   'assets/icons/menu.png',
-                  color:
-                      controller.isDarkMode.value ? Colors.black : Colors.white,
                   height: 25,
+                  color: Colors.white,
                 ),
               ),
-              actions: [
-                GetBuilder<WordDataController>(
-                    builder: (controller) => IconButton(
-                        icon: Icon(
-                          controller.isDarkMode.value
-                              ? Icons.dark_mode
-                              : Icons.light_mode,
-                          color: controller.isDarkMode.value
-                              ? Colors.black
-                              : Colors.white,
-                        ),
-                        onPressed: () => controller.toggleDarkMode())),
-              ],
+              
             ),
             body: GetBuilder<WordDataController>(
                 init: WordDataController(),
                 builder: (controller) {
                   return Column(
                     children: [
-                      Center(
-                        child: Text(
-                          'Dev Dictionary',
-                          style: GoogleFonts.oswald(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: controller.isDarkMode.value
-                                ? Colors.black
-                                : Colors.white,
+                      Container(
+                        height: 220,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey[600],
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
                           ),
                         ),
-                      ),
-                      Center(
-                        child: Text(
-                          'Programmer\'s Dictionary',
-                          style: GoogleFonts.openSans(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: controller.isDarkMode.value
-                                ? Colors.black
-                                : Colors.white,
-                          ),
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                'Dev Dictionary',
+                                style: GoogleFonts.playfairDisplay(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            Center(
+                              child: Text(
+                                'Programmer\'s Dictionary',
+                                style: GoogleFonts.inter(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 50),
+                            SearchBarWidget(
+                              textEditingController:
+                                  controller.searchController,
+                              controller: controller,
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 50),
-                      SearchBarWidget(
-                        textEditingController: controller.searchController,
-                        controller: controller,
-                      ),
-                      const SizedBox(height: 26.0),
                       Expanded(
                         child: controller.searhResults.isNotEmpty
                             ? const SearchResultWidget()
-                            : const HomeListViewItem(),
+                            :   HomeListViewItem(),
                       ),
                     ],
                   );
