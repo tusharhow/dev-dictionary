@@ -4,7 +4,9 @@ import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:dev_dictionary/src/models/bookmark_model.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +15,7 @@ class DetailScreen extends StatelessWidget {
   final Word word;
   final WordPropertyController wordPropertyController =
       Get.put(WordPropertyController());
-
+  final WordDataController wordDataController = Get.put(WordDataController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WordDataController>(

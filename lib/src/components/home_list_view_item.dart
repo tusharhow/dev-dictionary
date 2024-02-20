@@ -24,7 +24,7 @@ class HomeListViewItem extends StatelessWidget {
                   return ListView.builder(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
-                      itemCount: 20,
+                      itemCount: 25,
                       itemBuilder: (context, index) {
                         var word = snapshot.data![index];
 

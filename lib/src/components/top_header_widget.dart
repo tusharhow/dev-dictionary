@@ -23,7 +23,7 @@ class TopHeaderDesktop extends StatelessWidget {
                 height: 40,
                 width: 55,
                 decoration: BoxDecoration(
-                  color: Colors.deepOrange,
+                  color: Colors.deepPurple,
                   borderRadius: BorderRadius.circular(3),
                 ),
                 child: const Center(
@@ -81,19 +81,23 @@ class TopHeaderDesktop extends StatelessWidget {
                           return SettingsScreen();
                         }));
                       },
-                      child: Image.asset(
-                        'assets/icons/menu.png',
-                        color: Colors.black54,
-                        height: 25,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    const Text(
-                      'Settings',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/icons/menu.png',
+                            color: Colors.black54,
+                            height: 25,
+                          ),
+                          const SizedBox(width: 5),
+                          const Text(
+                            'Settings',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

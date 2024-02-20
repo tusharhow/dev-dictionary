@@ -20,7 +20,7 @@ class BigScreenDetailsPage extends StatelessWidget {
             appBar: AppBar(
                 elevation: 0,
                 title: Text(
-                  word.en,
+                  word.en.toUpperCase(),
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -40,7 +40,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                   builder: (controller) {
                     return Center(
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.9,
+                        width: MediaQuery.of(context).size.width / 1.7,
                         child: Column(
                           children: [
                             const SizedBox(height: defaultPadding),
@@ -83,8 +83,8 @@ class BigScreenDetailsPage extends StatelessWidget {
                                               height: 45,
                                               width: 45,
                                               decoration: BoxDecoration(
-                                                color: Colors
-                                                    .indigoAccent.shade100,
+                                                color:
+                                                    Colors.deepPurple.shade300,
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
@@ -106,8 +106,8 @@ class BigScreenDetailsPage extends StatelessWidget {
                                               height: 45,
                                               width: 45,
                                               decoration: BoxDecoration(
-                                                color: Colors
-                                                    .indigoAccent.shade100,
+                                                color:
+                                                    Colors.deepPurple.shade300,
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
@@ -144,9 +144,9 @@ class BigScreenDetailsPage extends StatelessWidget {
                                                     color: controller
                                                             .isBookmarkSaved(
                                                                 word.id)
-                                                        ? Colors.red.shade100
-                                                        : Colors.indigoAccent
-                                                            .shade100,
+                                                        ? Colors.red
+                                                        : Colors.deepPurple
+                                                            .shade300,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10),
@@ -189,10 +189,10 @@ class BigScreenDetailsPage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 20 * 3),
-                            Align(
+                            const Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                     horizontal: defaultPadding),
                                 child: Text(
                                   'Related Words',
@@ -218,7 +218,17 @@ class BigScreenDetailsPage extends StatelessWidget {
                                               .randomWords[index];
 
                                           return GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      BigScreenDetailsPage(
+                                                    word: word,
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -226,7 +236,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                               child: Container(
                                                 width: 100,
                                                 decoration: BoxDecoration(
-                                                  color: Colors.blue.shade100,
+                                                  color: Colors.deepPurple[200],
                                                   borderRadius:
                                                       BorderRadius.circular(10),
                                                 ),
@@ -235,7 +245,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                                       20.0),
                                                   child: Center(
                                                     child: Text(
-                                                      word.en,
+                                                      word.en.toUpperCase(),
                                                       style: TextStyle(
                                                         fontSize: 18,
                                                         color: Colors.black,

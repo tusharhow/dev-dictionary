@@ -4,12 +4,11 @@ import 'package:get/get.dart';
 import '../../components/footer_widget.dart';
 import '../../components/top_header_widget.dart';
 import '../../controllers/word_data_controller.dart';
-import '../../models/word_model.dart';
 import '../detail/desktop_details_page.dart';
 
 class DesktopView extends StatelessWidget {
   DesktopView({Key? key}) : super(key: key);
-
+  final WordDataController wordController = Get.put(WordDataController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,40 +134,48 @@ class DesktopView extends StatelessWidget {
                                                   .length, (index) {
                                             final topic = postController
                                                 .searhResults[index];
-                                            return ListTile(
-                                              title: Text(
-                                                topic.en.toUpperCase(),
-                                                style: const TextStyle(
-                                                  fontSize: 22,
-                                                  fontFamily: 'Borno',
-                                                ),
-                                              ),
-                                              leading: const Icon(
-                                                Icons.search,
-                                                color: Colors.blue,
-                                                size: 40,
-                                              ),
-                                              subtitle: Text(topic.bn,
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontFamily: 'Borno',
-                                                    color: Colors.black45,
-                                                  )),
-                                              onTap: () {
-                                                postController.update();
-                                                Navigator.push(
-                                                  context,
-                                                  CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        BigScreenDetailsPage(
-                                                      word: topic,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              shape: RoundedRectangleBorder(
+                                            return Container(
+                                              decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
+                                                color: Colors.deepPurple[50],
+                                              ),
+                                              child: ListTile(
+                                                title: Text(
+                                                  topic.en.toUpperCase(),
+                                                  style: const TextStyle(
+                                                    fontSize: 22,
+                                                    fontFamily: 'Borno',
+                                                  ),
+                                                ),
+                                                hoverColor:
+                                                    Colors.deepPurple[300],
+                                                leading: const Icon(
+                                                  Icons.search,
+                                                  color: Colors.deepPurple,
+                                                  size: 40,
+                                                ),
+                                                subtitle: Text(topic.bn,
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontFamily: 'Borno',
+                                                      color: Colors.black45,
+                                                    )),
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    CupertinoPageRoute(
+                                                      builder: (context) =>
+                                                          BigScreenDetailsPage(
+                                                        word: topic,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
                                               ),
                                             );
                                           }),
@@ -178,65 +185,98 @@ class DesktopView extends StatelessWidget {
                                   ),
                                 ],
                               )
-                            : FutureBuilder<List<Word>>(
-                                future: postController.getShuffledWordData(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return GridView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: snapshot.data!.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        childAspectRatio: 3.5,
-                                      ),
-                                      itemBuilder: (context, index) {
-                                        final topic = snapshot.data![index];
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Card(
-                                            elevation: 1,
-                                            child: ListTile(
-                                              title: Center(
-                                                child: Text(
-                                                  topic.en.toUpperCase(),
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontFamily: 'Borno',
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black54,
-                                                  ),
+                            : wordController.wordData.isEmpty
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : GridView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: postController
+                                        .getPaginatedData(
+                                            postController.currentPage)
+                                        .length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      childAspectRatio: 3.5,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      final topic = postController
+                                          .getPaginatedData(postController
+                                              .currentPage)[index];
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Card(
+                                          elevation: 1,
+                                          child: ListTile(
+                                            title: Center(
+                                              child: Text(
+                                                topic.en.toUpperCase(),
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontFamily: 'Borno',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black54,
                                                 ),
                                               ),
-                                              hoverColor: Colors.blue.shade100,
-                                              tileColor: Colors.white,
-                                              onTap: () {
-                                                postController.update();
-                                                Navigator.push(
-                                                  context,
-                                                  CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        BigScreenDetailsPage(
-                                                      word: topic,
-                                                    ),
+                                            ),
+                                            hoverColor: Colors.deepPurple[200],
+                                            tileColor: Colors.white,
+                                            onTap: () {
+                                              postController.update();
+                                              Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      BigScreenDetailsPage(
+                                                    word: topic,
                                                   ),
-                                                );
-                                              },
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
+                                                ),
+                                              );
+                                            },
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
                                             ),
                                           ),
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    return const Center(
-                                        child: CircularProgressIndicator());
-                                  }
-                                }),
-                        const SizedBox(height: 20),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                if (postController.currentPage > 1) {
+                                  postController.currentPage--;
+                                  postController.update();
+                                }
+                              },
+                              icon: const Icon(Icons.arrow_back_ios),
+                            ),
+                            Text(
+                              'Page ${postController.currentPage}',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Borno',
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                if (postController.currentPage <
+                                    (postController.wordData.length /
+                                            postController.itemsPerPage)
+                                        .ceil()) {
+                                  postController.currentPage++;
+                                  postController.update();
+                                }
+                              },
+                              icon: const Icon(Icons.arrow_forward_ios),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

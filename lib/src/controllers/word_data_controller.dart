@@ -61,4 +61,26 @@ class WordDataController extends GetxController {
     update();
     return wordData;
   }
+
+  int itemsPerPage = 15;
+  int currentPage = 1;
+
+  List<Word> getPaginatedData(int currentPage) {
+    final startIndex = (currentPage - 1) * itemsPerPage;
+    final endIndex = startIndex + itemsPerPage;
+
+    // Make sure wordData is of type List<MyData>
+    List<Word> typedWordData = wordData.cast<Word>();
+
+    return typedWordData.sublist(startIndex, endIndex);
+  }
+
+  void loadNextPage() {
+    int nextPage = currentPage + 1;
+
+    if (nextPage * itemsPerPage <= wordData.length) {
+      currentPage = nextPage;
+      update();
+    }
+  }
 }

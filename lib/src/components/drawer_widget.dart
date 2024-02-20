@@ -20,15 +20,40 @@ class DrawerWidget extends StatelessWidget {
         color: bgColor,
         child: ListView(children: [
           const SizedBox(height: 50),
-          Center(
-            child: Text(
-              'Dev Dictionary',
-              style: GoogleFonts.playfairDisplay(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 40,
+                width: 55,
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+                child: const Center(
+                  child: Text(
+                    'ডেভ',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontFamily: 'Borno',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: 8),
+              const Text(
+                'ডিকশনারি',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.white,
+                  fontFamily: 'Borno',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 50),
           ListTile(
@@ -50,7 +75,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Get.to(() =>   SettingsScreen());
+              Get.to(() => SettingsScreen());
             },
             leading: const Icon(
               Icons.settings,
