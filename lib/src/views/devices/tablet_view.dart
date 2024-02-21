@@ -8,8 +8,8 @@ import '../../models/word_model.dart';
 import '../detail/desktop_details_page.dart';
 
 class TabletView extends StatelessWidget {
-    TabletView({Key? key}) : super(key: key);
- 
+  const TabletView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,21 +20,21 @@ class TabletView extends StatelessWidget {
               final postController = Get.put(WordDataController());
               return Column(
                 children: [
-                  TopHeaderDesktop( ),
+                  TopHeaderDesktop(),
                   const SizedBox(height: 30),
-                  Center(
+                  const Center(
                     child: Text(
                       'ডেভ ডিকশনারি',
                       style: TextStyle(
                         fontSize: 70,
                         fontWeight: FontWeight.bold,
-                        color:Colors.black,
+                        color: Colors.black,
                         fontFamily: 'Borno',
                       ),
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Text(
+                  const Text(
                     'ডেভেলপারদের জন্য মাতৃভাষা বাংলায় সবচেয়ে \nবড় তথ্য ভান্ডার',
                     style: TextStyle(
                       fontSize: 23,
@@ -52,8 +52,7 @@ class TabletView extends StatelessWidget {
                         height: 55,
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: TextFormField(
-                          style: TextStyle(
-                              color: Colors.black45),
+                          style: const TextStyle(color: Colors.black45),
                           onChanged: (String query) {
                             if (query.isNotEmpty) {
                               postController.searchData(query.trim());
@@ -68,8 +67,7 @@ class TabletView extends StatelessWidget {
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 16, horizontal: 16),
                             hintText: 'কীসের উপর সার্চ করতে চান?',
-                            hintStyle: TextStyle(
-                                color:   Colors.black38),
+                            hintStyle: const TextStyle(color: Colors.black38),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent),
                               borderRadius:
@@ -89,9 +87,9 @@ class TabletView extends StatelessWidget {
                                       postController.searhResults.clear();
                                       controller.update();
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.clear,
-                                      color:  Colors.black38,
+                                      color: Colors.black38,
                                     ),
                                   ),
                           ),
@@ -142,10 +140,10 @@ class TabletView extends StatelessWidget {
                                           size: 40,
                                         ),
                                         subtitle: Text(topic.en,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontFamily: 'Borno',
-                                              color:   Colors.black45,
+                                              color: Colors.black45,
                                             )),
                                         onTap: () {
                                           Navigator.push(
@@ -192,17 +190,17 @@ class TabletView extends StatelessWidget {
                                       child: ListTile(
                                         title: Center(
                                           child: Text(
-                                            topic.en.toUpperCase(),
-                                            style: TextStyle(
+                                            topic.bn,
+                                            style: const TextStyle(
                                               fontSize: 22,
                                               fontFamily: 'Borno',
                                               fontWeight: FontWeight.bold,
-                                              color:   Colors.black54,
+                                              color: Colors.black54,
                                             ),
                                           ),
                                         ),
-                                        hoverColor:  Colors.blue.shade100,
-                                        tileColor:   Colors.white,
+                                        hoverColor: Colors.blue.shade100,
+                                        tileColor: Colors.white,
                                         onTap: () {
                                           Navigator.push(
                                             context,

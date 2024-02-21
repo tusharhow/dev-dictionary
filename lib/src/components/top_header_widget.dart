@@ -1,6 +1,5 @@
 import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
-import 'package:dev_dictionary/src/views/settings/settings_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dev_dictionary/src/views/bookmark/bookmark_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -58,14 +57,15 @@ class TopHeaderDesktop extends StatelessWidget {
                   wordPropertyController.urlLauncher(
                       'https://github.com/tusharhow/dev-dictionary');
                 },
-                child: Row(
+                child: const Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.star_border_rounded,
                       color: Colors.black54,
+                      size: 30,
                     ),
-                    const SizedBox(width: 5),
-                    const Text(
+                    SizedBox(width: 5),
+                    Text(
                       'Github',
                       style: TextStyle(
                         fontSize: 17,
@@ -73,31 +73,32 @@ class TopHeaderDesktop extends StatelessWidget {
                         color: Colors.black54,
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            CupertinoPageRoute(builder: (context) {
-                          return SettingsScreen();
-                        }));
-                      },
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/icons/menu.png',
-                            color: Colors.black54,
-                            height: 25,
-                          ),
-                          const SizedBox(width: 5),
-                          const Text(
-                            'Settings',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
+                  ],
+                ),
+              ),
+              const SizedBox(width: 20),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookMarkScreen(),
+                      ));
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.bookmarks_outlined,
+                      color: Colors.black54,
+                      size: 25,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      'Bookmarks',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
                       ),
                     ),
                   ],

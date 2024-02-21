@@ -1,6 +1,8 @@
+import 'package:dev_dictionary/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../components/footer_widget.dart';
 import '../../components/top_header_widget.dart';
 import '../../controllers/word_data_controller.dart';
@@ -25,19 +27,19 @@ class DesktopView extends StatelessWidget {
                       children: [
                         TopHeaderDesktop(),
                         const SizedBox(height: 50),
-                        Center(
+                        const Center(
                           child: Text(
                             'ডেভ ডিকশনারি',
                             style: TextStyle(
                               fontSize: 70,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: bgColor,
                               fontFamily: 'Borno',
                             ),
                           ),
                         ),
                         const SizedBox(height: 5),
-                        Text(
+                        const Text(
                           'ডেভেলপারদের জন্য মাতৃভাষা বাংলায় সবচেয়ে \nবড় তথ্য ভান্ডার',
                           style: TextStyle(
                             fontSize: 23,
@@ -55,7 +57,7 @@ class DesktopView extends StatelessWidget {
                               height: 55,
                               width: MediaQuery.of(context).size.width / 3,
                               child: TextFormField(
-                                style: TextStyle(color: Colors.black45),
+                                style: const TextStyle(color: Colors.black45),
                                 onChanged: (String query) {
                                   if (query.isNotEmpty) {
                                     postController.searchData(query.trim());
@@ -70,7 +72,7 @@ class DesktopView extends StatelessWidget {
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 16, horizontal: 16),
                                   hintText: 'কীসের উপর সার্চ করতে চান?',
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                     color: Colors.black45,
                                   ),
                                   enabledBorder: const OutlineInputBorder(
@@ -95,7 +97,7 @@ class DesktopView extends StatelessWidget {
                                             postController.searhResults.clear();
                                             controller.update();
                                           },
-                                          icon: Icon(Icons.clear,
+                                          icon: const Icon(Icons.clear,
                                               color: Colors.black45),
                                         ),
                                 ),
@@ -134,47 +136,52 @@ class DesktopView extends StatelessWidget {
                                                   .length, (index) {
                                             final topic = postController
                                                 .searhResults[index];
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: Colors.deepPurple[50],
-                                              ),
-                                              child: ListTile(
-                                                title: Text(
-                                                  topic.en.toUpperCase(),
-                                                  style: const TextStyle(
-                                                    fontSize: 22,
-                                                    fontFamily: 'Borno',
-                                                  ),
-                                                ),
-                                                hoverColor:
-                                                    Colors.deepPurple[300],
-                                                leading: const Icon(
-                                                  Icons.search,
-                                                  color: Colors.deepPurple,
-                                                  size: 40,
-                                                ),
-                                                subtitle: Text(topic.bn,
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontFamily: 'Borno',
-                                                      color: Colors.black45,
-                                                    )),
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    CupertinoPageRoute(
-                                                      builder: (context) =>
-                                                          BigScreenDetailsPage(
-                                                        word: topic,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                shape: RoundedRectangleBorder(
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
+                                                  color: Colors.deepPurple[50],
+                                                ),
+                                                child: ListTile(
+                                                  title: Text(
+                                                    topic.en.toUpperCase(),
+                                                    style: const TextStyle(
+                                                      fontSize: 22,
+                                                      fontFamily: 'Borno',
+                                                    ),
+                                                  ),
+                                                  hoverColor:
+                                                      Colors.deepPurple[300],
+                                                  leading: const Icon(
+                                                    Icons.search,
+                                                    color: Colors.deepPurple,
+                                                    size: 40,
+                                                  ),
+                                                  subtitle: Text(topic.bn,
+                                                      style: const TextStyle(
+                                                        fontSize: 16,
+                                                        fontFamily: 'Borno',
+                                                        color: Colors.black45,
+                                                      )),
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      CupertinoPageRoute(
+                                                        builder: (context) =>
+                                                            BigScreenDetailsPage(
+                                                          word: topic,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
                                                 ),
                                               ),
                                             );
@@ -192,8 +199,7 @@ class DesktopView extends StatelessWidget {
                                 : GridView.builder(
                                     shrinkWrap: true,
                                     itemCount: postController
-                                        .getPaginatedData(
-                                            postController.currentPage)
+                                        .getPaginatedData()
                                         .length,
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -201,22 +207,22 @@ class DesktopView extends StatelessWidget {
                                       childAspectRatio: 3.5,
                                     ),
                                     itemBuilder: (context, index) {
-                                      final topic = postController
-                                          .getPaginatedData(postController
-                                              .currentPage)[index];
+                                     final topic = postController
+                                          .getPaginatedData()[index];
+                                          
+                                        
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Card(
-                                          elevation: 1,
+                                          elevation: 2,
                                           child: ListTile(
                                             title: Center(
                                               child: Text(
                                                 topic.en.toUpperCase(),
-                                                style: const TextStyle(
+                                                style: GoogleFonts.inter(
                                                   fontSize: 20,
-                                                  fontFamily: 'Borno',
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: bgColor,
                                                 ),
                                               ),
                                             ),
@@ -243,40 +249,43 @@ class DesktopView extends StatelessWidget {
                                       );
                                     },
                                   ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                if (postController.currentPage > 1) {
-                                  postController.currentPage--;
-                                  postController.update();
-                                }
-                              },
-                              icon: const Icon(Icons.arrow_back_ios),
-                            ),
-                            Text(
-                              'Page ${postController.currentPage}',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'Borno',
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                if (postController.currentPage <
-                                    (postController.wordData.length /
-                                            postController.itemsPerPage)
-                                        .ceil()) {
-                                  postController.currentPage++;
-                                  postController.update();
-                                }
-                              },
-                              icon: const Icon(Icons.arrow_forward_ios),
-                            ),
-                          ],
-                        ),
+                        const SizedBox(height: 20),
+                        if (postController.searhResults.isEmpty)
+                          postController.wordData.isEmpty
+                              ? const SizedBox()
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        if (postController.currentPage > 1) {
+                                          postController.currentPage--;
+                                          postController.update();
+                                        }
+                                      },
+                                      icon: const Icon(Icons.arrow_back_ios),
+                                    ),
+                                    Text(
+                                      'Page ${postController.currentPage}',
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'Borno',
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        if (postController.currentPage <
+                                            (postController.wordData.length /
+                                                    postController.itemsPerPage)
+                                                .ceil()) {
+                                          postController.currentPage++;
+                                          postController.update();
+                                        }
+                                      },
+                                      icon: const Icon(Icons.arrow_forward_ios),
+                                    ),
+                                  ],
+                                ),
                       ],
                     ),
                   ),

@@ -43,45 +43,47 @@ class SearchResultWidget extends StatelessWidget {
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.blueGrey[600],
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: ListTile(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DetailScreen(
-                                          word: wordDataController
-                                              .searhResults[index],
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueGrey[600],
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: ListTile(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DetailScreen(
+                                            word: wordDataController
+                                                .searhResults[index],
+                                          ),
                                         ),
+                                      );
+                                    },
+                                    title: Text(
+                                      wordDataController.searhResults[index].en,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 18,
+                                        color: Colors.white,
                                       ),
-                                    );
-                                  },
-                                  title: Text(
-                                    wordDataController.searhResults[index].en,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 18,
+                                    ),
+                                    subtitle: Text(
+                                      wordDataController.searhResults[index].bn,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white54,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                    leading: const Icon(
+                                      Icons.search,
                                       color: Colors.white,
                                     ),
-                                  ),
-                                  subtitle: Text(
-                                    wordDataController
-                                        .searhResults[index].detail,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white54,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    maxLines: 2,
-                                  ),
-                                  leading: const Icon(
-                                    Icons.search,
-                                    color: Colors.white,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
                               );

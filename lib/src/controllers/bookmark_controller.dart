@@ -46,6 +46,5 @@ class BookmarkController extends GetxController {
           .toList());
     }
     update();
-    print(bookmarks.length);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dev_dictionary/src/controllers/bookmark_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
+import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:dev_dictionary/src/models/bookmark_model.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
 import 'package:flutter/material.dart';
@@ -11,17 +12,68 @@ class BigScreenDetailsPage extends StatelessWidget {
   BigScreenDetailsPage({Key? key, required this.word}) : super(key: key);
   final Word word;
   final WordDataController wordDataController = Get.put(WordDataController());
+  final WordPropertyController wordPropertyController =
+      Get.put(WordPropertyController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookmarkController>(
         init: BookmarkController(),
         builder: (controller) {
           return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Change Font Size'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                Obx(() => Slider(
+                                      value:
+                                          wordPropertyController.fontSize.value,
+                                      onChanged: (value) {
+                                        wordPropertyController
+                                            .changeFontSize(value);
+                                      },
+                                      min: 10,
+                                      max: 40,
+                                    )),
+                                Obx(() => Text(wordPropertyController
+                                    .fontSize.value
+                                    .toStringAsFixed(0))),
+                              ],
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Cancel')),
+                          TextButton(
+                              onPressed: () {
+                                wordPropertyController.changeFontSize(
+                                    wordPropertyController.fontSize.value);
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Ok')),
+                        ],
+                      );
+                    });
+              },
+              backgroundColor: Colors.deepPurple,
+              child: const Icon(Icons.format_size, color: Colors.white),
+            ),
             appBar: AppBar(
                 elevation: 0,
                 title: Text(
                   word.en.toUpperCase(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                   ),
                 ),
@@ -29,7 +81,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   ),
@@ -76,8 +128,9 @@ class BigScreenDetailsPage extends StatelessWidget {
                                         children: [
                                           GestureDetector(
                                             onTap: () {
-                                              // controller.copyToClipboard(
-                                              //     word.bn, context);
+                                              wordPropertyController
+                                                  .copyToClipboard(
+                                                      word.bn, context);
                                             },
                                             child: Container(
                                               height: 45,
@@ -177,14 +230,15 @@ class BigScreenDetailsPage extends StatelessWidget {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(20.0),
-                                  child: Text(
-                                    word.detail,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                                  child: Obx(() => Text(
+                                        word.detail,
+                                        style: TextStyle(
+                                          fontSize: wordPropertyController
+                                              .fontSize.value,
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      )),
                                 ),
                               ),
                             ),
@@ -246,7 +300,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                                   child: Center(
                                                     child: Text(
                                                       word.en.toUpperCase(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 18,
                                                         color: Colors.black,
                                                       ),

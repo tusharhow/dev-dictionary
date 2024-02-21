@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back,
                   color: Colors.white,
                   size: 25,
@@ -35,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
                 'Settings',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: wordPropertyController.fontSize.value,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -52,16 +52,16 @@ class SettingsScreen extends StatelessWidget {
                                 buildPopupDialog(context),
                           );
                         },
-                        leading: Icon(
+                        leading: const Icon(
                           Icons.format_size,
-                          color:  Colors.white,
+                          color: Colors.white,
                           size: 30,
                         ),
                         title: Text(
                           'Change Font Size',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: wordPropertyController.fontSize.value,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -74,46 +74,46 @@ class SettingsScreen extends StatelessWidget {
                             chooserTitle: 'Share App',
                           );
                         },
-                        leading: Icon(
+                        leading: const Icon(
                           Icons.share,
-                          color:  Colors.white,
+                          color: Colors.white,
                           size: 30,
                         ),
                         title: Text(
                           'Share App',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: wordPropertyController.fontSize.value,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                       ListTile(
                         onTap: () {},
-                        leading: Icon(
+                        leading: const Icon(
                           Icons.star,
-                          color:  Colors.white,
+                          color: Colors.white,
                           size: 30,
                         ),
                         title: Text(
                           'Rate App',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: wordPropertyController.fontSize.value,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                       ListTile(
                         onTap: () {},
-                        leading: Icon(
+                        leading: const Icon(
                           Icons.logout,
-                          color:  Colors.white,
+                          color: Colors.white,
                           size: 30,
                         ),
                         title: Text(
                           'Logout',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: wordPropertyController.fontSize.value,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -123,6 +123,4 @@ class SettingsScreen extends StatelessWidget {
           );
         });
   }
-
-  
 }

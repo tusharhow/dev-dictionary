@@ -1,5 +1,7 @@
 name: dev_dictionary
-description: A new Flutter project.
+description: Dev Dictionary is a dictionary app for developers. It provides
+  meanings, synonyms, antonyms, and examples of a word. It also provides the
+  pronunciation of the word.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -31,6 +33,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_share: ^2.0.0
+  flutter_tts: ^3.8.5
   get: ^4.6.6
   google_fonts: ^6.1.0
   http: ^1.2.1
@@ -54,9 +57,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/
-    # - assets/images/
     - assets/logos/
     - assets/fonts/
+    - lib/src/data/dev_dictionary_data.json
 
   fonts:
 

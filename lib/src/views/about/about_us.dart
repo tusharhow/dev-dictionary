@@ -14,14 +14,14 @@ class AboutUsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 80,
               backgroundImage: NetworkImage(
                 'https://placekitten.com/200/200',
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+         const   Text(
               'Our Team',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
@@ -32,13 +32,6 @@ class AboutUsScreen extends StatelessWidget {
               'make a positive impact on people\'s lives.',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Add functionality, e.g., navigate to team member profiles
-              },
-              child: const Text('Meet the Team'),
             ),
           ],
         ),

@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Dev Dictionary',
+      title: 'বাংলা ডেভেলপার ডিকশনারি । ডেভ ডিকশনারি',
       theme: ThemeData.light(useMaterial3: true),
       home: Responsive(
         mobile: MobileView(),
-        tablet: TabletView(),
+        tablet: const TabletView(),
         desktop: DesktopView(),
       ),
     );

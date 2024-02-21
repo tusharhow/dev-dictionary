@@ -5,6 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WordPropertyController extends GetxController {
+  @override
+  void onInit() {
+    getFontSize();
+    super.onInit();
+  }
+
   // change font size and save to local storage
   var fontSize = 16.0.obs;
 
@@ -22,8 +28,6 @@ class WordPropertyController extends GetxController {
     update();
   }
 
-// 'https://github.com/tusharhow/dev-dictionary'
-
   Future urlLauncher(String uri) async {
     if (await canLaunchUrl(Uri.parse(uri))) {
       await launchUrl(Uri.parse(uri));
@@ -39,4 +43,3 @@ class WordPropertyController extends GetxController {
             const SnackBar(content: Text('Copied to Clipboard'))));
   }
 }
- 

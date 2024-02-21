@@ -1,3 +1,5 @@
+import 'package:dev_dictionary/constants.dart';
+import 'package:dev_dictionary/src/views/contrbution/contribution_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,9 +11,9 @@ class FooterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 220,
+      height: 250,
       decoration: const BoxDecoration(
-        color: Colors.black,
+        color: bgColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
@@ -92,6 +94,31 @@ class FooterWidget extends StatelessWidget {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => launchUrl(
                           Uri.parse('https://www.facebook.com/tusharhow'))),
+              ],
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text.rich(
+            TextSpan(
+              text: 'Contributors: ',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+              children: [
+                TextSpan(
+                    text: 'See all contributors',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.teal,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ContributorsScreen()))),
               ],
             ),
           ),

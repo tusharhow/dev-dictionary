@@ -24,14 +24,29 @@ class MobileView extends StatelessWidget {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.blueGrey[600],
-              leading: IconButton(
-                onPressed: () {
-                  _scaffoldKey.currentState!.openDrawer();
-                },
-                icon: Image.asset(
-                  'assets/icons/menu.png',
-                  height: 25,
+              leading: Container(
+                margin: const EdgeInsets.all(10),
+                height: 40,
+                width: 40,
+                decoration: const BoxDecoration(
                   color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    _scaffoldKey.currentState!.openDrawer();
+                  },
+                  icon: Image.asset(
+                    'assets/icons/menu.png',
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
@@ -45,7 +60,7 @@ class MobileView extends StatelessWidget {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.blueGrey[600],
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(30),
                             bottomRight: Radius.circular(30),
                           ),

@@ -9,9 +9,9 @@ class ContactUsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Contact Us'),
       ),
-      body: Column(
+      body:const Column(
         children: [
-          const Padding(
+           Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
               'If you have any suggestion or feedback, please contact us at:',
@@ -20,9 +20,6 @@ class ContactUsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Row(
-            children: [],
-          )
         ],
       ),
     );

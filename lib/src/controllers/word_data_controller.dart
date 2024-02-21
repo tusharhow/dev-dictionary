@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:dev_dictionary/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
-import '../../constants.dart';
 import '../models/word_model.dart';
-import '../services/network_service.dart';
 
 class WordDataController extends GetxController {
   @override
@@ -18,10 +19,11 @@ class WordDataController extends GetxController {
   var wordData = <Word>[].obs;
 
   Future<List<Word>> getShuffledWordData() async {
-    final response = await NetworkService.get(BASE_URL);
-    var jsonResponse = json.decode(response.body);
+    final response = await rootBundle.loadString(BASE_URL);
+    var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
-    wordData(data.words).shuffle();
+    wordData(data.words);
+    wordData.shuffle();
 
     return wordData;
   }
@@ -34,7 +36,6 @@ class WordDataController extends GetxController {
     update();
     searhResults.clear();
     if (word.isEmpty) {
-      update();
       return searhResults;
     }
 
@@ -54,8 +55,8 @@ class WordDataController extends GetxController {
   var randomWords = <Word>[].obs;
 
   Future<List<Word>> getRandomWord() async {
-    final response = await NetworkService.get(BASE_URL);
-    var jsonResponse = json.decode(response.body);
+    final response = await rootBundle.loadString(BASE_URL);
+    var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
     randomWords(data.words);
     update();
@@ -65,14 +66,13 @@ class WordDataController extends GetxController {
   int itemsPerPage = 15;
   int currentPage = 1;
 
-  List<Word> getPaginatedData(int currentPage) {
+  List<dynamic> getPaginatedData() {
     final startIndex = (currentPage - 1) * itemsPerPage;
-    final endIndex = startIndex + itemsPerPage;
+    var endIndex = startIndex + itemsPerPage;
 
-    // Make sure wordData is of type List<MyData>
-    List<Word> typedWordData = wordData.cast<Word>();
+    endIndex = endIndex.clamp(0, wordData.length);
 
-    return typedWordData.sublist(startIndex, endIndex);
+    return wordData.sublist(startIndex, endIndex);
   }
 
   void loadNextPage() {
@@ -82,5 +82,22 @@ class WordDataController extends GetxController {
       currentPage = nextPage;
       update();
     }
+  }
+
+  FlutterTts flutterTts = FlutterTts();
+  var isSpeaking = false.obs;
+
+  Future<void> speak(String text) async {
+    await flutterTts.setLanguage('bn-BD');
+    await flutterTts.setPitch(1);
+    await flutterTts.setSpeechRate(0.5);
+    if (isSpeaking.value) {
+      await flutterTts.stop();
+      isSpeaking(false);
+    } else {
+      await flutterTts.speak(text);
+      isSpeaking(true);
+    }
+    update();
   }
 }
