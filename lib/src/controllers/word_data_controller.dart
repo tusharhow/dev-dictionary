@@ -63,6 +63,14 @@ class WordDataController extends GetxController {
     return wordData;
   }
 
+  Future<Word> getWordByEn(String en) async {
+    final response = await rootBundle.loadString(BASE_URL);
+    var jsonResponse = json.decode(response);
+    var data = WordModel.fromJson(jsonResponse);
+    var word = data.words.firstWhere((element) => element.en == en);
+    return word;
+  }
+
   int itemsPerPage = 15;
   int currentPage = 1;
 
@@ -87,8 +95,8 @@ class WordDataController extends GetxController {
   FlutterTts flutterTts = FlutterTts();
   var isSpeaking = false.obs;
 
-  Future<void> speak(String text) async {
-    await flutterTts.setLanguage('bn-BD');
+  Future<void> speak(String text, String lang) async {
+    await flutterTts.setLanguage(lang);
     await flutterTts.setPitch(1);
     await flutterTts.setSpeechRate(0.5);
     if (isSpeaking.value) {

@@ -14,24 +14,71 @@ class AboutUsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CircleAvatar(
-              radius: 80,
-              backgroundImage: NetworkImage(
-                'https://placekitten.com/200/200',
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 40,
+                  width: 55,
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple,
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'ডেভ',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontFamily: 'Borno',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  'ডিকশনারি',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontFamily: 'Borno',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Programmer\'s Dictionary',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            const SizedBox(height: 20),
-         const   Text(
-              'Our Team',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            const SizedBox(height: 40),
+            const Text(
+              'This is a dictionary app for programmers. It contains a list of programming terms and their meanings. The app is open source and the source code can be found on GitHub.',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
             ),
-            const SizedBox(height: 10),
-            Text(
-              'We are a passionate team dedicated to creating amazing Flutter apps. '
-              'Our mission is to deliver high-quality, user-friendly solutions that '
-              'make a positive impact on people\'s lives.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            const SizedBox(height: 16),
+            const Text(
+              'The app is built using Flutter and Dart. The data is fetched from a REST API and the app is built using the GetX package for state management.',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'The app is built by a team of contributors. The contributors are listed below.',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ],
         ),

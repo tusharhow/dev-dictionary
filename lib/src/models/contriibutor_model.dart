@@ -18,12 +18,12 @@ class Contributor {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['login'] = this.username;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['login'] = username;
 
-    data['avatar_url'] = this.avatarUrl;
+    data['avatar_url'] = avatarUrl;
 
-    data['html_url'] = this.githubUrl;
+    data['html_url'] = githubUrl;
 
     return data;
   }

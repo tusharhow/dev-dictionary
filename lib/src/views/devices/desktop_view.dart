@@ -1,16 +1,15 @@
-import 'package:dev_dictionary/constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../components/footer_widget.dart';
 import '../../components/top_header_widget.dart';
 import '../../controllers/word_data_controller.dart';
-import '../detail/desktop_details_page.dart';
 
 class DesktopView extends StatelessWidget {
   DesktopView({Key? key}) : super(key: key);
   final WordDataController wordController = Get.put(WordDataController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +32,6 @@ class DesktopView extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 70,
                               fontWeight: FontWeight.bold,
-                              color: bgColor,
                               fontFamily: 'Borno',
                             ),
                           ),
@@ -44,7 +42,6 @@ class DesktopView extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 23,
                             fontFamily: 'Borno',
-                            color: Colors.black54,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -57,7 +54,7 @@ class DesktopView extends StatelessWidget {
                               height: 55,
                               width: MediaQuery.of(context).size.width / 3,
                               child: TextFormField(
-                                style: const TextStyle(color: Colors.black45),
+                                style: const TextStyle(),
                                 onChanged: (String query) {
                                   if (query.isNotEmpty) {
                                     postController.searchData(query.trim());
@@ -71,10 +68,7 @@ class DesktopView extends StatelessWidget {
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 16, horizontal: 16),
-                                  hintText: 'কীসের উপর সার্চ করতে চান?',
-                                  hintStyle: const TextStyle(
-                                    color: Colors.black45,
-                                  ),
+                                  hintText: 'শব্দের অর্থ খুঁজুন...',
                                   enabledBorder: const OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.transparent),
@@ -97,8 +91,9 @@ class DesktopView extends StatelessWidget {
                                             postController.searhResults.clear();
                                             controller.update();
                                           },
-                                          icon: const Icon(Icons.clear,
-                                              color: Colors.black45),
+                                          icon: const Icon(
+                                            Icons.clear,
+                                          ),
                                         ),
                                 ),
                               ),
@@ -167,15 +162,9 @@ class DesktopView extends StatelessWidget {
                                                         color: Colors.black45,
                                                       )),
                                                   onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      CupertinoPageRoute(
-                                                        builder: (context) =>
-                                                            BigScreenDetailsPage(
-                                                          word: topic,
-                                                        ),
-                                                      ),
-                                                    );
+                                                    context.go(
+                                                        '/details/${topic.en}',
+                                                        extra: topic);
                                                   },
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -207,14 +196,13 @@ class DesktopView extends StatelessWidget {
                                       childAspectRatio: 3.5,
                                     ),
                                     itemBuilder: (context, index) {
-                                     final topic = postController
+                                      final topic = postController
                                           .getPaginatedData()[index];
-                                          
-                                        
+
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Card(
-                                          elevation: 2,
+                                          elevation: 3,
                                           child: ListTile(
                                             title: Center(
                                               child: Text(
@@ -222,27 +210,16 @@ class DesktopView extends StatelessWidget {
                                                 style: GoogleFonts.inter(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w500,
-                                                  color: bgColor,
                                                 ),
                                               ),
                                             ),
-                                            hoverColor: Colors.deepPurple[200],
-                                            tileColor: Colors.white,
                                             onTap: () {
-                                              postController.update();
-                                              Navigator.push(
-                                                context,
-                                                CupertinoPageRoute(
-                                                  builder: (context) =>
-                                                      BigScreenDetailsPage(
-                                                    word: topic,
-                                                  ),
-                                                ),
-                                              );
+                                              context.go('/details/${topic.en}',
+                                                  extra: topic);
                                             },
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(15),
+                                                  BorderRadius.circular(12),
                                             ),
                                           ),
                                         ),
@@ -261,6 +238,12 @@ class DesktopView extends StatelessWidget {
                                         if (postController.currentPage > 1) {
                                           postController.currentPage--;
                                           postController.update();
+                                          if (postController.currentPage == 1) {
+                                            context.go('/');
+                                          } else {
+                                            context.go(
+                                                '/?page=${postController.currentPage}');
+                                          }
                                         }
                                       },
                                       icon: const Icon(Icons.arrow_back_ios),
@@ -280,6 +263,12 @@ class DesktopView extends StatelessWidget {
                                                 .ceil()) {
                                           postController.currentPage++;
                                           postController.update();
+                                          if (postController.currentPage == 1) {
+                                            context.go('/');
+                                          } else {
+                                            context.go(
+                                                '/?page=${postController.currentPage}');
+                                          }
                                         }
                                       },
                                       icon: const Icon(Icons.arrow_forward_ios),

@@ -1,9 +1,9 @@
+import 'package:dev_dictionary/src/controllers/theme_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
-import '../../../constants.dart';
 import '../../components/popup_widget.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -11,15 +11,14 @@ class SettingsScreen extends StatelessWidget {
 
   final WordPropertyController wordPropertyController =
       Get.put(WordPropertyController());
+  final ThemeController themeController = Get.put(ThemeController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WordDataController>(
         init: WordDataController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: bgColor,
             appBar: AppBar(
-              backgroundColor: bgColor,
               elevation: 0,
               leading: IconButton(
                 onPressed: () {
@@ -27,14 +26,12 @@ class SettingsScreen extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
                   size: 25,
                 ),
               ),
-              title: Text(
+              title: const Text(
                 'Settings',
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -54,13 +51,62 @@ class SettingsScreen extends StatelessWidget {
                         },
                         leading: const Icon(
                           Icons.format_size,
-                          color: Colors.white,
-                          size: 30,
+                          size: 25,
                         ),
-                        title: Text(
+                        title: const Text(
                           'Change Font Size',
                           style: TextStyle(
-                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Select Theme'),
+                                content: SizedBox(
+                                  height: 100,
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        title: const Text('Light Theme'),
+                                        leading: const Icon(
+                                          Icons.light_mode,
+                                          size: 25,
+                                        ),
+                                        onTap: () {
+                                          themeController.toggleDarkMode();
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      ListTile(
+                                        title: const Text('Dark Theme'),
+                                        leading: const Icon(
+                                          Icons.dark_mode,
+                                          size: 25,
+                                        ),
+                                        onTap: () {
+                                          themeController.toggleDarkMode();
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        leading: const Icon(
+                          Icons.brightness_6,
+                          size: 25,
+                        ),
+                        title: const Text(
+                          'Change Theme',
+                          style: TextStyle(
                             fontSize: 16,
                           ),
                         ),
@@ -76,13 +122,11 @@ class SettingsScreen extends StatelessWidget {
                         },
                         leading: const Icon(
                           Icons.share,
-                          color: Colors.white,
-                          size: 30,
+                          size: 25,
                         ),
-                        title: Text(
+                        title: const Text(
                           'Share App',
                           style: TextStyle(
-                            color: Colors.white,
                             fontSize: 16,
                           ),
                         ),
@@ -91,28 +135,11 @@ class SettingsScreen extends StatelessWidget {
                         onTap: () {},
                         leading: const Icon(
                           Icons.star,
-                          color: Colors.white,
-                          size: 30,
+                          size: 25,
                         ),
-                        title: Text(
+                        title: const Text(
                           'Rate App',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        onTap: () {},
-                        leading: const Icon(
-                          Icons.logout,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                        title: Text(
-                          'Logout',
-                          style: TextStyle(
-                            color: Colors.white,
                             fontSize: 16,
                           ),
                         ),

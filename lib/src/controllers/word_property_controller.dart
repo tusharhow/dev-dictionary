@@ -38,8 +38,10 @@ class WordPropertyController extends GetxController {
 
   // copy to clipboard
   Future<void> copyToClipboard(String text, context) async {
-    await Clipboard.setData(ClipboardData(text: text)).then((value) =>
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Copied to Clipboard'))));
+    await Clipboard.setData(ClipboardData(text: text)).then(
+        (value) => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Copied to clipboard"),
+              backgroundColor: Colors.deepPurple,
+            )));
   }
 }

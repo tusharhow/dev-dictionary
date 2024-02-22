@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import '../../components/footer_widget.dart';
 import '../../components/top_header_widget.dart';
 import '../../controllers/word_data_controller.dart';
 import '../../models/word_model.dart';
-import '../detail/desktop_details_page.dart';
 
 class TabletView extends StatelessWidget {
   const TabletView({Key? key}) : super(key: key);
@@ -146,15 +145,8 @@ class TabletView extends StatelessWidget {
                                               color: Colors.black45,
                                             )),
                                         onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            CupertinoPageRoute(
-                                              builder: (context) =>
-                                                  BigScreenDetailsPage(
-                                                word: topic,
-                                              ),
-                                            ),
-                                          );
+                                          context.go('/details/${topic.en}',
+                                              extra: topic);
                                         },
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -202,15 +194,8 @@ class TabletView extends StatelessWidget {
                                         hoverColor: Colors.blue.shade100,
                                         tileColor: Colors.white,
                                         onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            CupertinoPageRoute(
-                                              builder: (context) =>
-                                                  BigScreenDetailsPage(
-                                                word: topic,
-                                              ),
-                                            ),
-                                          );
+                                          context.go('/details/${topic.en}',
+                                              extra: topic);
                                         },
                                         shape: RoundedRectangleBorder(
                                           borderRadius:

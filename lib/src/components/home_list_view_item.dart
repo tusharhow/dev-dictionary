@@ -2,10 +2,9 @@ import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../constants.dart';
 import '../controllers/word_data_controller.dart';
-import '../views/detail/detail_screen.dart';
 
 class HomeListViewItem extends StatelessWidget {
   HomeListViewItem({Key? key}) : super(key: key);
@@ -33,29 +32,20 @@ class HomeListViewItem extends StatelessWidget {
                               horizontal: 16, vertical: 8),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailScreen(
-                                    word: word,
-                                  ),
-                                ),
-                              );
+                              context.go('/details/${word.en}', extra: word);
                             },
-                            child: Container(
-                              height: 70,
-                              decoration: BoxDecoration(
-                                color: bgColor2,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  word.en.toUpperCase(),
-                                  style: GoogleFonts.inter(
-                                    fontSize:
-                                        wordPropertyController.fontSize.value,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
+                            child: Card(
+                              elevation: 2,
+                              child: SizedBox(
+                                height: 70,
+                                child: Center(
+                                  child: Text(
+                                    word.en.toUpperCase(),
+                                    style: GoogleFonts.inter(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      // color: Colors.black,
+                                    ),
                                   ),
                                 ),
                               ),

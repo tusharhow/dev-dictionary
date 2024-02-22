@@ -1,13 +1,15 @@
+import 'package:dev_dictionary/src/controllers/theme_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
-import 'package:dev_dictionary/src/views/bookmark/bookmark_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class TopHeaderDesktop extends StatelessWidget {
   TopHeaderDesktop({Key? key}) : super(key: key);
 
   final WordPropertyController wordPropertyController =
       Get.put(WordPropertyController());
+  final ThemeController themeController = Get.put(ThemeController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,7 +44,6 @@ class TopHeaderDesktop extends StatelessWidget {
                 'ডিকশনারি',
                 style: TextStyle(
                   fontSize: 25,
-                  color: Colors.black,
                   fontFamily: 'Borno',
                   fontWeight: FontWeight.bold,
                 ),
@@ -61,7 +62,6 @@ class TopHeaderDesktop extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.star_border_rounded,
-                      color: Colors.black54,
                       size: 30,
                     ),
                     SizedBox(width: 5),
@@ -70,7 +70,6 @@ class TopHeaderDesktop extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black54,
                       ),
                     ),
                   ],
@@ -79,17 +78,12 @@ class TopHeaderDesktop extends StatelessWidget {
               const SizedBox(width: 20),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BookMarkScreen(),
-                      ));
+                  context.go('/bookmarks');
                 },
                 child: const Row(
                   children: [
                     Icon(
                       Icons.bookmarks_outlined,
-                      color: Colors.black54,
                       size: 25,
                     ),
                     SizedBox(width: 5),
@@ -98,12 +92,25 @@ class TopHeaderDesktop extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black54,
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
+              const SizedBox(width: 20),
+              IconButton(
+                onPressed: () {
+                  themeController.toggleDarkMode();
+                },
+                icon: Obx(
+                  () => Icon(
+                    themeController.isDarkMode.value
+                        ? Icons.dark_mode
+                        : Icons.light_mode,
+                    size: 25,
+                  ),
+                ),
+              ),
             ],
           ),
         ],

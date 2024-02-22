@@ -1,7 +1,6 @@
-import 'package:dev_dictionary/constants.dart';
-import 'package:dev_dictionary/src/views/contrbution/contribution_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FooterWidget extends StatelessWidget {
@@ -13,7 +12,7 @@ class FooterWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 250,
       decoration: const BoxDecoration(
-        color: bgColor,
+        color: Colors.black,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
@@ -107,18 +106,15 @@ class FooterWidget extends StatelessWidget {
               ),
               children: [
                 TextSpan(
-                    text: 'See all contributors',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.teal,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ContributorsScreen()))),
+                  text: 'See all contributors',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.teal,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => context.go('/contribution'),
+                ),
               ],
             ),
           ),

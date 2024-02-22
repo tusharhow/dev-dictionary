@@ -1,6 +1,6 @@
-import 'package:dev_dictionary/src/views/detail/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/word_data_controller.dart';
 
@@ -22,7 +22,7 @@ class SearchResultWidget extends StatelessWidget {
                     'সার্চ রেজাল্ট সমূহ',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -47,20 +47,15 @@ class SearchResultWidget extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.blueGrey[600],
+                                    color: const Color(0xff5db962),
                                     borderRadius: BorderRadius.circular(15),
                                   ),
                                   child: ListTile(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => DetailScreen(
-                                            word: wordDataController
-                                                .searhResults[index],
-                                          ),
-                                        ),
-                                      );
+                                      context.go(
+                                          '/details/${wordDataController.searhResults[index].en}',
+                                          extra: wordDataController
+                                              .searhResults[index]);
                                     },
                                     title: Text(
                                       wordDataController.searhResults[index].en,

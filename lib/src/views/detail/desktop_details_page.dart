@@ -6,11 +6,13 @@ import 'package:dev_dictionary/src/models/word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import '../../../constants.dart';
 
 class BigScreenDetailsPage extends StatelessWidget {
   BigScreenDetailsPage({Key? key, required this.word}) : super(key: key);
   final Word word;
+
   final WordDataController wordDataController = Get.put(WordDataController());
   final WordPropertyController wordPropertyController =
       Get.put(WordPropertyController());
@@ -69,23 +71,6 @@ class BigScreenDetailsPage extends StatelessWidget {
               backgroundColor: Colors.deepPurple,
               child: const Icon(Icons.format_size, color: Colors.white),
             ),
-            appBar: AppBar(
-                elevation: 0,
-                title: Text(
-                  word.en.toUpperCase(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-                leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.black,
-                  ),
-                )),
             body: SingleChildScrollView(
               child: GetBuilder<BookmarkController>(
                   init: BookmarkController(),
@@ -96,12 +81,35 @@ class BigScreenDetailsPage extends StatelessWidget {
                         child: Column(
                           children: [
                             const SizedBox(height: defaultPadding),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                height: 50,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepPurple,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: defaultPadding),
                             Center(
                               child: Container(
                                 width: MediaQuery.of(context).size.width / 1.1,
                                 height: 180,
                                 decoration: BoxDecoration(
-                                  color: bgColor2,
+                                  color: Colors.deepPurple[300],
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
@@ -110,34 +118,57 @@ class BigScreenDetailsPage extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: defaultPadding),
-                                        child: Text(
-                                          word.bn,
-                                          style: const TextStyle(
-                                            fontSize: 25,
-                                            color: Colors.white,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            word.en.isNotEmpty
+                                                ? word.en[0].toUpperCase() +
+                                                    word.en.substring(1)
+                                                : word.en,
+                                            style: const TextStyle(
+                                              fontSize: 30,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
+                                          const SizedBox(width: defaultPadding),
+                                          GestureDetector(
+                                            onTap: () {
+                                              wordDataController.speak(
+                                                  word.en, 'en-US');
+                                            },
+                                            child: const Icon(
+                                              Icons.volume_up,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(width: defaultPadding),
+                                          Text(
+                                            word.bn,
+                                            style: const TextStyle(
+                                              fontSize: 30,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(height: defaultPadding),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                            MainAxisAlignment.center,
                                         children: [
                                           GestureDetector(
                                             onTap: () {
                                               wordPropertyController
                                                   .copyToClipboard(
-                                                      word.bn, context);
+                                                      word.detail, context);
                                             },
                                             child: Container(
                                               height: 45,
                                               width: 45,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    Colors.deepPurple.shade300,
+                                                color: Colors.green.shade300,
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
@@ -147,6 +178,8 @@ class BigScreenDetailsPage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
+                                          const SizedBox(
+                                              width: defaultPadding * 4),
                                           GestureDetector(
                                             onTap: () {
                                               FlutterShare.share(
@@ -159,8 +192,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                               height: 45,
                                               width: 45,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    Colors.deepPurple.shade300,
+                                                color: Colors.green.shade300,
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
@@ -170,6 +202,8 @@ class BigScreenDetailsPage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
+                                          const SizedBox(
+                                              width: defaultPadding * 4),
                                           GestureDetector(
                                             onTap: () {
                                               if (controller
@@ -198,8 +232,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                                             .isBookmarkSaved(
                                                                 word.id)
                                                         ? Colors.red
-                                                        : Colors.deepPurple
-                                                            .shade300,
+                                                        : Colors.green.shade300,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10),
@@ -225,7 +258,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                               child: Container(
                                 width: MediaQuery.of(context).size.width / 1.1,
                                 decoration: BoxDecoration(
-                                  color: bgColor2,
+                                  color: Colors.deepPurple[300],
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
@@ -252,7 +285,6 @@ class BigScreenDetailsPage extends StatelessWidget {
                                   'Related Words',
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: Colors.black,
                                   ),
                                 ),
                               ),
@@ -273,15 +305,8 @@ class BigScreenDetailsPage extends StatelessWidget {
 
                                           return GestureDetector(
                                             onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      BigScreenDetailsPage(
-                                                    word: word,
-                                                  ),
-                                                ),
-                                              );
+                                              context.go('/details/${word.en}',
+                                                  extra: word);
                                             },
                                             child: Padding(
                                               padding:

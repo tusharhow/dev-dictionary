@@ -1,4 +1,3 @@
-import 'package:dev_dictionary/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,11 +18,9 @@ class MobileView extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             key: _scaffoldKey,
-            backgroundColor: bgColor,
             drawer: const DrawerWidget(),
             appBar: AppBar(
               elevation: 0,
-              backgroundColor: Colors.blueGrey[600],
               leading: Container(
                 margin: const EdgeInsets.all(10),
                 height: 40,
@@ -55,73 +52,56 @@ class MobileView extends StatelessWidget {
                 builder: (controller) {
                   return Column(
                     children: [
-                      Container(
-                        height: 220,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.blueGrey[600],
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(30),
-                            bottomRight: Radius.circular(30),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 60,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.deepPurple,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'ডেভ',
-                                      style: TextStyle(
-                                        fontSize: 40,
-                                        color: Colors.white,
-                                        fontFamily: 'Borno',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                const Text(
-                                  'ডিকশনারি',
-                                  style: TextStyle(
-                                    fontSize: 40,
-                                    color: Colors.white,
-                                    fontFamily: 'Borno',
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 60,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurple,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            const SizedBox(height: 10),
-                            Center(
+                            child: const Center(
                               child: Text(
-                                'Programmer\'s Dictionary',
-                                style: GoogleFonts.inter(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
+                                'ডেভ',
+                                style: TextStyle(
+                                  fontSize: 40,
                                   color: Colors.white,
+                                  fontFamily: 'Borno',
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 50),
-                            SearchBarWidget(
-                              textEditingController:
-                                  controller.searchController,
-                              controller: controller,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(
+                            'ডিকশনারি',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontFamily: 'Borno',
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Center(
+                        child: Text(
+                          'Programmer\'s Dictionary',
+                          style: GoogleFonts.inter(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
+                      const SizedBox(height: 40),
+                      SearchBarWidget(
+                        textEditingController: controller.searchController,
+                        controller: controller,
+                      ),
+                      const SizedBox(height: 20),
                       Expanded(
                         child: controller.searhResults.isNotEmpty
                             ? const SearchResultWidget()

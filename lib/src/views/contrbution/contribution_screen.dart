@@ -1,4 +1,3 @@
-import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/src/controllers/contributor_controller.dart';
 import 'package:dev_dictionary/src/models/contriibutor_model.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +9,17 @@ class ContributorsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
       appBar: AppBar(
-          title:
-              const Text('Contributors', style: TextStyle(color: Colors.white)),
-          backgroundColor: bgColor,
+          title: const Text(
+            'Contributors',
+          ),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+            ),
           )),
       body: FutureBuilder<List<Contributor>>(
         future: ContributorController().getContributors(),
@@ -56,7 +56,6 @@ class ContributorsScreen extends StatelessWidget {
                         contributor.username!,
                         style: const TextStyle(
                           fontSize: 15,
-                          color: Colors.white,
                         ),
                       ),
                     ],
