@@ -1,3 +1,5 @@
+import 'package:dev_dictionary/constants.dart';
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +25,7 @@ class TabletView extends StatelessWidget {
                   const SizedBox(height: 30),
                   const Center(
                     child: Text(
-                      'ডেভ ডিকশনারি',
+                      AppConstants.appNameBangali,
                       style: TextStyle(
                         fontSize: 70,
                         fontWeight: FontWeight.bold,
@@ -34,7 +36,7 @@ class TabletView extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   const Text(
-                    'ডেভেলপারদের জন্য মাতৃভাষা বাংলায় সবচেয়ে \nবড় তথ্য ভান্ডার',
+                   AppConstants.appSlugBengali,
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Borno',
@@ -65,7 +67,7 @@ class TabletView extends StatelessWidget {
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 16, horizontal: 16),
-                            hintText: 'কীসের উপর সার্চ করতে চান?',
+                            hintText: AppConstants.textFieldHint,
                             hintStyle: const TextStyle(color: Colors.black38),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent),
@@ -145,7 +147,8 @@ class TabletView extends StatelessWidget {
                                               color: Colors.black45,
                                             )),
                                         onTap: () {
-                                          context.go('/details/${topic.en}',
+                                          context.go(
+                                              '/${AppRouteConstants.detailsRouteName}/${topic.en}',
                                               extra: topic);
                                         },
                                         shape: RoundedRectangleBorder(
@@ -194,7 +197,7 @@ class TabletView extends StatelessWidget {
                                         hoverColor: Colors.blue.shade100,
                                         tileColor: Colors.white,
                                         onTap: () {
-                                          context.go('/details/${topic.en}',
+                                          context.go('/${AppRouteConstants.detailsRouteName}/${topic.en}',
                                               extra: topic);
                                         },
                                         shape: RoundedRectangleBorder(

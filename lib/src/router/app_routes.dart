@@ -1,5 +1,7 @@
+import 'package:dev_dictionary/src/components/animation/slide_transition.dart';
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:dev_dictionary/src/views/about/about_us.dart';
 import 'package:dev_dictionary/src/views/about/contact_us.dart';
 import 'package:dev_dictionary/src/views/bookmark/bookmark_screen.dart';
@@ -16,75 +18,125 @@ import 'package:go_router/go_router.dart';
 class MyRouter {
   final GoRouter router = GoRouter(routes: [
     GoRoute(
-        path: '/',
+        path: AppRouteConstants.homeRouteName,
         builder: (BuildContext context, GoRouterState state) {
           return Responsive(
             mobile: MobileView(),
             desktop: DesktopView(),
-            tablet: TabletView(),
+            tablet: const TabletView(),
           );
         },
         routes: <RouteBase>[
           GoRoute(
-            path: 'about',
-            builder: (BuildContext context, GoRouterState state) {
-              return const AboutUsScreen();
-            },
-          ),
-          GoRoute(
-            path: 'settings',
-            builder: (BuildContext context, GoRouterState state) {
-              return SettingsScreen();
-            },
-          ),
-          GoRoute(
-            path: 'bookmarks',
-            builder: (BuildContext context, GoRouterState state) {
-              return BookMarkScreen();
-            },
-          ),
-          GoRoute(
-            path: 'contact',
-            builder: (BuildContext context, GoRouterState state) {
-              return const ContactUsScreen();
-            },
-          ),
-          GoRoute(
-            path: 'contribution',
-            builder: (BuildContext context, GoRouterState state) {
-              return const ContributorsScreen();
-            },
-          ),
-          GoRoute(
-            path: 'details/:en',
-            builder: (BuildContext context, GoRouterState state) {
-              final en = state.pathParameters['en'];
-
-              return FutureBuilder<Word>(
-                future: WordDataController().getWordByEn(en!),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    final word = snapshot.data!;
-                    return DetailsScreen(word: word);
-                  } else {
-                    return const Text('No word found');
-                  }
+            path: AppRouteConstants.aboutRouteName,
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: const AboutUsScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return slideTransition(animation, child);
                 },
               );
             },
           ),
           GoRoute(
-            path: 'page/:page',
-            builder: (BuildContext context, GoRouterState state) {
+            path: AppRouteConstants.settingsRouteName,
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: SettingsScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return slideTransition(animation, child);
+                },
+              );
+            },
+          ),
+          GoRoute(
+            path: AppRouteConstants.bookmarksRouteName,
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: BookMarkScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return slideTransition(animation, child);
+                },
+              );
+            },
+          ),
+          GoRoute(
+            path: AppRouteConstants.contactUsRouteName,
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: const ContactUsScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return slideTransition(animation, child);
+                },
+              );
+            },
+          ),
+          GoRoute(
+            path: AppRouteConstants.contributionRouteName,
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: const ContributorsScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return slideTransition(animation, child);
+                },
+              );
+            },
+          ),
+          GoRoute(
+            path: '${AppRouteConstants.detailsRouteName}/:en',
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              final en = state.pathParameters['en'];
+
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: FutureBuilder<Word>(
+                  future: WordDataController().getWordByEn(en!),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData) {
+                      final word = snapshot.data!;
+                      return DetailsScreen(word: word);
+                    } else {
+                      return const Text('No word found');
+                    }
+                  },
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return slideTransition(animation, child);
+                },
+              );
+            },
+          ),
+          GoRoute(
+            path:
+                '${AppRouteConstants.pageRouteName}/:${AppRouteConstants.pageRouteName}',
+            pageBuilder: (BuildContext context, GoRouterState state) {
               final page = state.pathParameters['page'];
-              return Responsive(
-                mobile: MobileView(),
-                desktop: DesktopView(),
-                tablet: const TabletView(),
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: Responsive(
+                  mobile: MobileView(),
+                  desktop: DesktopView(),
+                  tablet: const TabletView(),
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return slideTransition(animation, child);
+                },
               );
             },
           ),

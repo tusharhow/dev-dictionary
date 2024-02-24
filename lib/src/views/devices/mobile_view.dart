@@ -1,3 +1,4 @@
+import 'package:dev_dictionary/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -89,7 +90,7 @@ class MobileView extends StatelessWidget {
                       const SizedBox(height: 10),
                       Center(
                         child: Text(
-                          'Programmer\'s Dictionary',
+                          AppConstants.appSlug,
                           style: GoogleFonts.inter(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
@@ -107,6 +108,7 @@ class MobileView extends StatelessWidget {
                             ? const SearchResultWidget()
                             : HomeListViewItem(),
                       ),
+                      const SizedBox(height: 20),
                     ],
                   );
                 }),

@@ -1,3 +1,5 @@
+import 'package:dev_dictionary/constants.dart';
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -28,7 +30,7 @@ class DesktopView extends StatelessWidget {
                         const SizedBox(height: 50),
                         const Center(
                           child: Text(
-                            'ডেভ ডিকশনারি',
+                            AppConstants.appNameBangali,
                             style: TextStyle(
                               fontSize: 70,
                               fontWeight: FontWeight.bold,
@@ -38,7 +40,7 @@ class DesktopView extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         const Text(
-                          'ডেভেলপারদের জন্য মাতৃভাষা বাংলায় সবচেয়ে \nবড় তথ্য ভান্ডার',
+                          AppConstants.appSlugBengali,
                           style: TextStyle(
                             fontSize: 23,
                             fontFamily: 'Borno',
@@ -68,7 +70,7 @@ class DesktopView extends StatelessWidget {
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 16, horizontal: 16),
-                                  hintText: 'শব্দের অর্থ খুঁজুন...',
+                                  hintText: AppConstants.textFieldHint,
                                   enabledBorder: const OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.transparent),
@@ -214,7 +216,8 @@ class DesktopView extends StatelessWidget {
                                               ),
                                             ),
                                             onTap: () {
-                                              context.go('/details/${topic.en}',
+                                              context.go(
+                                                  '/${AppRouteConstants.detailsRouteName}/${topic.en}',
                                                   extra: topic);
                                             },
                                             shape: RoundedRectangleBorder(
@@ -239,7 +242,8 @@ class DesktopView extends StatelessWidget {
                                           postController.currentPage--;
                                           postController.update();
                                           if (postController.currentPage == 1) {
-                                            context.go('/');
+                                            context.go(AppRouteConstants
+                                                .homeRouteName);
                                           } else {
                                             context.go(
                                                 '/?page=${postController.currentPage}');

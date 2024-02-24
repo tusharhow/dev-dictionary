@@ -1,10 +1,13 @@
+import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/src/controllers/theme_controller.dart';
 import 'package:dev_dictionary/src/router/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   final ThemeController themeController = ThemeController();
@@ -27,7 +30,7 @@ class MyApp extends StatelessWidget {
       routeInformationParser: router.router.routeInformationParser,
       routeInformationProvider: router.router.routeInformationProvider,
       routerDelegate: router.router.routerDelegate,
-      title: 'বাংলা ডেভেলপার ডিকশনারি । ডেভ ডিকশনারি',
+      title: AppConstants.appName,
       theme: themeController.isDarkMode.value
           ? ThemeData(
               useMaterial3: true,

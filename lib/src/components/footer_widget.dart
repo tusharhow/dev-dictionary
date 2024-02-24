@@ -1,3 +1,5 @@
+import 'package:dev_dictionary/constants.dart';
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -69,7 +71,7 @@ class FooterWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text('Copyright © 2024 by Dev Dictionary',
+          const Text(AppConstants.footerText,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white,
@@ -113,7 +115,8 @@ class FooterWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => context.go('/contribution'),
+                    ..onTap = () => context
+                        .go('/${AppRouteConstants.contributionRouteName}'),
                 ),
               ],
             ),

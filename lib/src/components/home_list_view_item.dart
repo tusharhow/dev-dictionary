@@ -1,5 +1,6 @@
 import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -32,21 +33,32 @@ class HomeListViewItem extends StatelessWidget {
                               horizontal: 16, vertical: 8),
                           child: GestureDetector(
                             onTap: () {
-                              context.go('/details/${word.en}', extra: word);
+                              context.go(
+                                  '/${AppRouteConstants.detailsRouteName}/${word.en}',
+                                  extra: word);
                             },
                             child: Card(
                               elevation: 2,
                               child: SizedBox(
-                                height: 70,
-                                child: Center(
-                                  child: Text(
-                                    word.en.toUpperCase(),
-                                    style: GoogleFonts.inter(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      // color: Colors.black,
+                                height: 75,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      word.en.toUpperCase(),
+                                      style: GoogleFonts.inter(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
-                                  ),
+                                    Text(
+                                      word.bn,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

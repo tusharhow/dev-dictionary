@@ -1,8 +1,7 @@
 import 'package:dev_dictionary/src/controllers/bookmark_controller.dart';
-import 'package:dev_dictionary/src/models/word_model.dart';
-import 'package:dev_dictionary/src/views/detail/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class BookMarkScreen extends StatelessWidget {
   BookMarkScreen({Key? key}) : super(key: key);
@@ -31,22 +30,10 @@ class BookMarkScreen extends StatelessWidget {
                     var word = controller.bookmarks[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
+                          horizontal: 10, vertical: 5),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MobileDetailsScreen(
-                                word: Word(
-                                  en: word.en,
-                                  bn: word.bn,
-                                  id: word.id,
-                                  detail: word.detail,
-                                ),
-                              ),
-                            ),
-                          );
+                          context.go('/details/${word.en}', extra: word);
                         },
                         child: Card(
                           child: ListTile(

@@ -1,6 +1,6 @@
 import 'package:dev_dictionary/src/models/word_model.dart';
 import 'package:dev_dictionary/src/views/detail/desktop_details_page.dart';
-import 'package:dev_dictionary/src/views/detail/detail_screen.dart';
+import 'package:dev_dictionary/src/views/detail/mobile_detail_screen.dart';
 import 'package:dev_dictionary/src/views/responsive/responsive.dart';
 
 import 'package:flutter/material.dart';

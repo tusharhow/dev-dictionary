@@ -1,3 +1,4 @@
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -53,12 +54,13 @@ class SearchResultWidget extends StatelessWidget {
                                   child: ListTile(
                                     onTap: () {
                                       context.go(
-                                          '/details/${wordDataController.searhResults[index].en}',
+                                          '/${AppRouteConstants.detailsRouteName}/${wordDataController.searhResults[index].en}',
                                           extra: wordDataController
                                               .searhResults[index]);
                                     },
                                     title: Text(
-                                      wordDataController.searhResults[index].en,
+                                      wordDataController.searhResults[index].en
+                                          .toUpperCase(),
                                       style: GoogleFonts.inter(
                                         fontSize: 18,
                                         color: Colors.white,
@@ -69,6 +71,7 @@ class SearchResultWidget extends StatelessWidget {
                                       style: const TextStyle(
                                         fontSize: 16,
                                         color: Colors.white54,
+                                        fontFamily: 'Borno',
                                       ),
                                       maxLines: 2,
                                     ),

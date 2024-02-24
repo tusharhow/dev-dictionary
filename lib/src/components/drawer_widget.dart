@@ -1,3 +1,4 @@
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,7 +48,7 @@ class DrawerWidget extends StatelessWidget {
         const SizedBox(height: 50),
         ListTile(
           onTap: () {
-            context.go('bookmarks');
+            context.go('/${AppRouteConstants.bookmarksRouteName}');
           },
           leading: const Icon(
             Icons.bookmark,
@@ -62,7 +63,7 @@ class DrawerWidget extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            context.go('settings');
+            context.go('/${AppRouteConstants.settingsRouteName}');
           },
           leading: const Icon(
             Icons.settings,
@@ -77,7 +78,7 @@ class DrawerWidget extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            context.go('about');
+            context.go('/${AppRouteConstants.aboutRouteName}');
           },
           leading: const Icon(
             Icons.info_outline,
@@ -92,7 +93,7 @@ class DrawerWidget extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            context.go('contact');
+            context.go('/${AppRouteConstants.contactUsRouteName}');
           },
           leading: const Icon(
             Icons.contact_mail,
@@ -107,8 +108,7 @@ class DrawerWidget extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            context.go('contribution');
-           
+            context.go('/${AppRouteConstants.contributionRouteName}');
           },
           leading: const Icon(
             Icons.help_center_outlined,

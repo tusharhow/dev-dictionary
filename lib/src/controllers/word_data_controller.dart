@@ -1,9 +1,12 @@
 import 'dart:convert';
-import 'package:dev_dictionary/constants.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/word_model.dart';
 
 class WordDataController extends GetxController {
@@ -11,6 +14,7 @@ class WordDataController extends GetxController {
   void onInit() {
     getShuffledWordData();
     getRandomWord();
+    fetchWordOfTheDay();
     super.onInit();
   }
 
@@ -19,7 +23,8 @@ class WordDataController extends GetxController {
   var wordData = <Word>[].obs;
 
   Future<List<Word>> getShuffledWordData() async {
-    final response = await rootBundle.loadString(BASE_URL);
+    final baseUrl = dotenv.env['BASE_URL'];
+    final response = await rootBundle.loadString(baseUrl!);
     var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
     wordData(data.words);
@@ -55,7 +60,8 @@ class WordDataController extends GetxController {
   var randomWords = <Word>[].obs;
 
   Future<List<Word>> getRandomWord() async {
-    final response = await rootBundle.loadString(BASE_URL);
+    final baseUrl = dotenv.env['BASE_URL'];
+    final response = await rootBundle.loadString(baseUrl!);
     var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
     randomWords(data.words);
@@ -64,7 +70,8 @@ class WordDataController extends GetxController {
   }
 
   Future<Word> getWordByEn(String en) async {
-    final response = await rootBundle.loadString(BASE_URL);
+    final baseUrl = dotenv.env['BASE_URL'];
+    final response = await rootBundle.loadString(baseUrl!);
     var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
     var word = data.words.firstWhere((element) => element.en == en);
@@ -92,20 +99,81 @@ class WordDataController extends GetxController {
     }
   }
 
-  FlutterTts flutterTts = FlutterTts();
-  var isSpeaking = false.obs;
+  final FlutterTts flutterTts = FlutterTts();
+  var isSpeakingEnglish = false.obs;
+  var isSpeakingBangla = false.obs;
 
-  Future<void> speak(String text, String lang) async {
-    await flutterTts.setLanguage(lang);
+  Future<void> speak(String text, bool isEnglish) async {
+    await flutterTts.setLanguage(isEnglish ? 'en-US' : 'bn-BD');
     await flutterTts.setPitch(1);
     await flutterTts.setSpeechRate(0.5);
-    if (isSpeaking.value) {
-      await flutterTts.stop();
-      isSpeaking(false);
+
+    flutterTts.setCompletionHandler(() {
+      if (isEnglish) {
+        isSpeakingEnglish.value = false;
+        update();
+      } else {
+        isSpeakingBangla.value = false;
+        update();
+      }
+    });
+
+    await flutterTts.speak(text);
+
+    if (isEnglish) {
+      isSpeakingEnglish.value = true;
+      update();
     } else {
-      await flutterTts.speak(text);
-      isSpeaking(true);
+      isSpeakingBangla.value = true;
+      update();
+    }
+  }
+
+  Future<void> stop(bool isEnglish) async {
+    await flutterTts.stop();
+
+    if (isEnglish) {
+      isSpeakingEnglish.value = false;
+    } else {
+      isSpeakingBangla.value = false;
     }
     update();
+  }
+
+  int wordOfTheDay = 0; // Default value
+  late DateTime lastFetched;
+
+  Future<void> fetchWordOfTheDay() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    DateTime now = DateTime.now();
+    lastFetched = DateTime.parse(
+        prefs.getString('lastFetched') ?? '1970-01-01T00:00:00Z');
+
+    // Check if it's been more than a day since last fetch
+    if (now.difference(lastFetched).inDays >= 1) {
+      // Fetch new random number from the API
+      int randomWord = (await getRandomWordd()) as int;
+
+      wordOfTheDay = randomWord;
+      update();
+
+      // Save the new random number and update last fetched timestamp
+      prefs.setInt('wordOfTheDay', randomWord);
+      prefs.setString('lastFetched', now.toIso8601String());
+    } else {
+      // Use the existing random number
+
+      wordOfTheDay = prefs.getInt('wordOfTheDay') ?? 0;
+      update();
+    }
+  }
+
+  Future<int> getRandomWordd() async {
+    final baseUrl = dotenv.env['BASE_URL'];
+    final response = await rootBundle.loadString(baseUrl!);
+    var jsonResponse = json.decode(response);
+    var data = WordModel.fromJson(jsonResponse);
+
+    return data.words[Random().nextInt(data.words.length)].id;
   }
 }

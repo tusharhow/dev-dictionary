@@ -28,6 +28,7 @@ class SearchBarWidget extends StatelessWidget {
               hintText: 'শব্দের অর্থ খুঁজুন...',
               hintStyle: const TextStyle(
                 color: Colors.black54,
+                fontFamily: 'Borno',
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(

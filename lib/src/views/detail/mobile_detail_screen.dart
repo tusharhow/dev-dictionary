@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 class MobileDetailsScreen extends StatelessWidget {
   MobileDetailsScreen({Key? key, required this.word}) : super(key: key);
   final Word word;
-  
+
   final WordPropertyController wordPropertyController =
       Get.put(WordPropertyController());
   final WordDataController wordDataController = Get.put(WordDataController());
@@ -23,15 +23,19 @@ class MobileDetailsScreen extends StatelessWidget {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                wordDataController.speak(word.detail, 'bn-BD');
+                if (wordDataController.isSpeakingBangla.value) {
+                  wordDataController.stop(false);
+                } else {
+                  wordDataController.speak(word.bn, false);
+                }
               },
               backgroundColor: Colors.deepPurple,
-              child: Icon(
-                wordDataController.isSpeaking.value
-                    ? Icons.stop
-                    : Icons.volume_up,
-                color: Colors.white,
-              ),
+              child: Obx(() => Icon(
+                    wordDataController.isSpeakingBangla.value
+                        ? Icons.stop
+                        : Icons.volume_up,
+                    color: Colors.white,
+                  )),
             ),
             appBar: AppBar(
               elevation: 0,
@@ -101,13 +105,21 @@ class MobileDetailsScreen extends StatelessWidget {
                                         const SizedBox(width: 10),
                                         GestureDetector(
                                           onTap: () {
-                                            wordDataController.speak(
-                                                word.en, 'en-US');
+                                            if (wordDataController
+                                                .isSpeakingEnglish()) {
+                                              wordDataController.stop(true);
+                                            } else {
+                                              wordDataController.speak(
+                                                  word.en, true);
+                                            }
                                           },
-                                          child: const Icon(
-                                            Icons.volume_up,
-                                            color: Colors.white,
-                                          ),
+                                          child: Obx(() => Icon(
+                                                wordDataController
+                                                        .isSpeakingEnglish()
+                                                    ? Icons.stop
+                                                    : Icons.volume_up,
+                                                color: Colors.white,
+                                              )),
                                         ),
                                         const SizedBox(width: 10),
                                         Text(

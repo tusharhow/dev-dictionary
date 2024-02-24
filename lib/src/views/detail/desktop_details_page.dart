@@ -3,6 +3,7 @@ import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:dev_dictionary/src/models/bookmark_model.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
@@ -135,13 +136,22 @@ class BigScreenDetailsPage extends StatelessWidget {
                                           const SizedBox(width: defaultPadding),
                                           GestureDetector(
                                             onTap: () {
-                                              wordDataController.speak(
-                                                  word.en, 'en-US');
+                                              if (wordDataController
+                                                  .isSpeakingEnglish.value) {
+                                                wordDataController.stop(true);
+                                              } else {
+                                                wordDataController.speak(
+                                                    word.en, true);
+                                              }
                                             },
-                                            child: const Icon(
-                                              Icons.volume_up,
-                                              color: Colors.white,
-                                            ),
+                                            child: Obx(() => Icon(
+                                                  wordDataController
+                                                          .isSpeakingEnglish
+                                                          .value
+                                                      ? Icons.stop
+                                                      : Icons.volume_up,
+                                                  color: Colors.white,
+                                                )),
                                           ),
                                           const SizedBox(width: defaultPadding),
                                           Text(
@@ -305,7 +315,8 @@ class BigScreenDetailsPage extends StatelessWidget {
 
                                           return GestureDetector(
                                             onTap: () {
-                                              context.go('/details/${word.en}',
+                                              context.go(
+                                                  '/${AppRouteConstants.detailsRouteName}/${word.en}',
                                                   extra: word);
                                             },
                                             child: Padding(
