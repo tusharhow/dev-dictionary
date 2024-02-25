@@ -1,10 +1,13 @@
 import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/src/controllers/bookmark_controller.dart';
+import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:dev_dictionary/src/models/bookmark_model.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
+import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class MobileDetailsScreen extends StatelessWidget {
@@ -26,7 +29,9 @@ class MobileDetailsScreen extends StatelessWidget {
           },
           backgroundColor: Colors.deepPurple,
           child: Icon(
-            wordPropertyController.isSpeakingBangla ? Icons.stop : Icons.volume_up,
+            wordPropertyController.isSpeakingBangla
+                ? Icons.stop
+                : Icons.volume_up,
             color: Colors.white,
           ),
         ),
@@ -50,6 +55,7 @@ class MobileDetailsScreen extends StatelessWidget {
             child: Center(
               child: IconButton(
                 onPressed: () {
+                  wordPropertyController.stop(true);
                   Navigator.pop(context);
                 },
                 icon: const Icon(
@@ -95,10 +101,12 @@ class MobileDetailsScreen extends StatelessWidget {
                                 const SizedBox(width: 10),
                                 GestureDetector(
                                   onTap: () {
-                                    if (wordPropertyController.isSpeakingEnglish) {
+                                    if (wordPropertyController
+                                        .isSpeakingEnglish) {
                                       wordPropertyController.stop(true);
                                     } else {
-                                      wordPropertyController.speak(word.en, true);
+                                      wordPropertyController.speak(
+                                          word.en, true);
                                     }
                                   },
                                   child: Icon(
@@ -114,6 +122,7 @@ class MobileDetailsScreen extends StatelessWidget {
                                   style: const TextStyle(
                                     fontSize: 18,
                                     color: Colors.white,
+                                    fontFamily: 'Borno',
                                   ),
                                 ),
                               ],
@@ -227,6 +236,7 @@ class MobileDetailsScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: wordPropertyController.fontSize,
                               color: Colors.white,
+                              fontFamily: 'Borno',
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -235,6 +245,85 @@ class MobileDetailsScreen extends StatelessWidget {
                     }),
                   ),
                 ),
+                const SizedBox(height: 20 * 3),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+                    child: Text(
+                      'Related Words',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Consumer<WordDataController>(
+                    builder: (context, wordDataController, child) {
+                  return FutureBuilder<List<Word>>(
+                      future: wordDataController.getRandomWord(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return SizedBox(
+                            height: 400,
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: 3,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                final word =
+                                    wordDataController.randomWords[index];
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    context.go(
+                                        '/${AppRouteConstants.detailsRouteName}/${word.en}',
+                                        extra: word);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 8),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.deepPurple[200],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              word.en.toUpperCase(),
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              word.bn,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontFamily: 'Borno',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                      });
+                }),
               ],
             );
           }),

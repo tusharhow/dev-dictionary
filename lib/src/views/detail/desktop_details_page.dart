@@ -4,6 +4,7 @@ import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:dev_dictionary/src/models/bookmark_model.dart';
 import 'package:dev_dictionary/src/models/word_model.dart';
 import 'package:dev_dictionary/src/router/app_route_constants.dart';
+import 'package:dev_dictionary/src/views/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:go_router/go_router.dart';
@@ -75,7 +76,9 @@ class BigScreenDetailsPage extends StatelessWidget {
               builder: (context, controller, child) {
             return Center(
               child: SizedBox(
-                width: MediaQuery.of(context).size.width / 1.7,
+                width: Responsive.isDesktop(context)
+                    ? MediaQuery.of(context).size.width / 1.7
+                    : double.infinity,
                 child: Column(
                   children: [
                     const SizedBox(height: defaultPadding),
@@ -89,15 +92,19 @@ class BigScreenDetailsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: Consumer<WordPropertyController>(builder:
+                              (context, wordPropertyController, child) {
+                            return IconButton(
+                              onPressed: () {
+                                wordPropertyController.stop(true);
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.white,
+                              ),
+                            );
+                          }),
                         ),
                       ),
                     ),
@@ -156,6 +163,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.white,
+                                      fontFamily: 'Borno',
                                     ),
                                   ),
                                 ],
@@ -262,18 +270,18 @@ class BigScreenDetailsPage extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Consumer<WordPropertyController>(
-                            builder: (context, wordPropertyController, child) {
-                              return Text(
-                                word.detail,
-                                style: TextStyle(
-                                  fontSize: wordPropertyController.fontSize,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                              );
-                            }
-                          ),
+                          child: Consumer<WordPropertyController>(builder:
+                              (context, wordPropertyController, child) {
+                            return Text(
+                              word.detail,
+                              style: TextStyle(
+                                fontSize: wordPropertyController.fontSize,
+                                color: Colors.white,
+                                fontFamily: 'Borno',
+                              ),
+                              textAlign: TextAlign.center,
+                            );
+                          }),
                         ),
                       ),
                     ),
@@ -291,63 +299,90 @@ class BigScreenDetailsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     Consumer<WordDataController>(
-                      builder: (context, wordDataController, child) {
-                        return SizedBox(
-                          height: 400,
-                          child: FutureBuilder<List<Word>>(
-                              future: wordDataController.getRandomWord(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: 3,
-                                    itemBuilder: (context, index) {
-                                      final word =
-                                          wordDataController.randomWords[index];
-                        
-                                      return GestureDetector(
-                                        onTap: () {
-                                          context.go(
-                                              '/${AppRouteConstants.detailsRouteName}/${word.en}',
-                                              extra: word);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 12),
-                                          child: Container(
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              color: Colors.deepPurple[200],
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(20.0),
-                                              child: Center(
-                                                child: Text(
+                        builder: (context, wordDataController, child) {
+                      return FutureBuilder<List<Word>>(
+                          future: wordDataController.getRandomWord(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return SizedBox(
+                                height: 170,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: 5,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    final word =
+                                        wordDataController.randomWords[index];
+
+                                    return GestureDetector(
+                                      onTap: () {
+                                        context.go(
+                                            '/${AppRouteConstants.detailsRouteName}/${word.en}',
+                                            extra: word);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8),
+                                        child: Container(
+                                          width: 200,
+                                          height: 200,
+                                          decoration: BoxDecoration(
+                                            color: Colors.deepPurple[200],
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(20.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundColor: Colors.white,
+                                                  child: Text(
+                                                    word.en.isNotEmpty
+                                                        ? word.en[0]
+                                                            .toUpperCase()
+                                                        : word.en,
+                                                    style: const TextStyle(
+                                                      fontSize: 30,
+                                                      color: Colors.deepPurple,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
                                                   word.en.toUpperCase(),
                                                   style: const TextStyle(
                                                     fontSize: 18,
-                                                    color: Colors.black,
                                                   ),
                                                 ),
-                                              ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  word.bn,
+                                                  style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontFamily: 'Borno',
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
-                              }),
-                        );
-                      }
-                    ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                          });
+                    }),
                   ],
                 ),
               ),

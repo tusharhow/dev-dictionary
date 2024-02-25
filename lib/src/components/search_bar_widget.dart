@@ -1,3 +1,4 @@
+import 'package:dev_dictionary/src/views/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 import '../controllers/word_data_controller.dart';
@@ -19,12 +20,16 @@ class SearchBarWidget extends StatelessWidget {
         elevation: 2,
         child: SizedBox(
           height: 60,
-          width: MediaQuery.of(context).size.width,
+          width: Responsive.isDesktop(context)
+              ? MediaQuery.of(context).size.width / 3
+              : Responsive.isTablet(context)
+                  ? MediaQuery.of(context).size.width / 1.5
+                  : MediaQuery.of(context).size.width,
           child: TextFormField(
             controller: textEditingController,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.green[50],
+              fillColor: Colors.deepPurple.shade100,
               hintText: 'শব্দের অর্থ খুঁজুন...',
               hintStyle: const TextStyle(
                 color: Colors.black54,
@@ -49,7 +54,7 @@ class SearchBarWidget extends StatelessWidget {
                         color: Colors.black54,
                       ),
                       onPressed: () {
-                         controller.clearSearchResults();
+                        controller.clearSearchResults();
                       },
                     )
                   : null,

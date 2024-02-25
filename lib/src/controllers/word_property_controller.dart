@@ -51,17 +51,7 @@ class WordPropertyController extends ChangeNotifier {
     await flutterTts.setLanguage(isEnglish ? 'en-US' : 'bn-BD');
     await flutterTts.setPitch(1);
     await flutterTts.setSpeechRate(0.5);
-
-    flutterTts.setCompletionHandler(() {
-      if (isEnglish) {
-        isSpeakingEnglish = false;
-        notifyListeners();
-      } else {
-        isSpeakingBangla = false;
-        notifyListeners();
-      }
-    });
-
+    await flutterTts.setVolume(1);
     await flutterTts.speak(text);
 
     if (isEnglish) {
@@ -75,12 +65,34 @@ class WordPropertyController extends ChangeNotifier {
 
   Future<void> stop(bool isEnglish) async {
     await flutterTts.stop();
-
     if (isEnglish) {
       isSpeakingEnglish = false;
+      notifyListeners();
     } else {
       isSpeakingBangla = false;
+      notifyListeners();
     }
-    notifyListeners();
+  }
+
+  String convertToBengaliNumber(String englishNumber) {
+    final Map<String, String> digitMap = {
+      '0': '০',
+      '1': '১',
+      '2': '২',
+      '3': '৩',
+      '4': '৪',
+      '5': '৫',
+      '6': '৬',
+      '7': '৭',
+      '8': '৮',
+      '9': '৯',
+    };
+
+    final List<String> bengaliDigits = englishNumber
+        .split('')
+        .map((digit) => digitMap[digit] ?? digit)
+        .toList();
+
+    return bengaliDigits.join('');
   }
 }

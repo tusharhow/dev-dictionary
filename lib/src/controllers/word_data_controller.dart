@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dev_dictionary/src/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import '../models/word_model.dart';
 
 class WordDataController extends ChangeNotifier {
@@ -80,18 +81,32 @@ class WordDataController extends ChangeNotifier {
   List<dynamic> getPaginatedData() {
     final startIndex = (currentPage - 1) * itemsPerPage;
     var endIndex = startIndex + itemsPerPage;
-
     endIndex = endIndex.clamp(0, wordData.length);
-
+    notifyListeners();
     return wordData.sublist(startIndex, endIndex);
   }
 
-  void loadNextPage() {
-    int nextPage = currentPage + 1;
-
-    if (nextPage * itemsPerPage <= wordData.length) {
-      currentPage = nextPage;
+  void nextPage(BuildContext context) {
+    if (currentPage < (wordData.length / itemsPerPage).ceil()) {
+      currentPage++;
       notifyListeners();
+      if (currentPage == 1) {
+        context.go('/');
+      } else {
+        context.go('/?page=$currentPage');
+      }
+    }
+  }
+
+  void previousPage(BuildContext context) {
+    if (currentPage > 1) {
+      currentPage--;
+      notifyListeners();
+      if (currentPage == 1) {
+        context.go('/');
+      } else {
+        context.go('/?page=$currentPage');
+      }
     }
   }
 }
