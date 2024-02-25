@@ -22,7 +22,7 @@ class MyRouter {
         builder: (BuildContext context, GoRouterState state) {
           return Responsive(
             mobile: MobileView(),
-            desktop: DesktopView(),
+            desktop: const DesktopView(),
             tablet: const TabletView(),
           );
         },
@@ -45,7 +45,7 @@ class MyRouter {
             pageBuilder: (BuildContext context, GoRouterState state) {
               return CustomTransitionPage(
                 key: state.pageKey,
-                child: SettingsScreen(),
+                child: const SettingsScreen(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return slideTransition(animation, child);
@@ -58,7 +58,7 @@ class MyRouter {
             pageBuilder: (BuildContext context, GoRouterState state) {
               return CustomTransitionPage(
                 key: state.pageKey,
-                child: BookMarkScreen(),
+                child: const BookMarkScreen(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return slideTransition(animation, child);
@@ -130,7 +130,7 @@ class MyRouter {
                 key: state.pageKey,
                 child: Responsive(
                   mobile: MobileView(),
-                  desktop: DesktopView(),
+                  desktop: const DesktopView(),
                   tablet: const TabletView(),
                 ),
                 transitionsBuilder:

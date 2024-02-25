@@ -49,8 +49,7 @@ class SearchBarWidget extends StatelessWidget {
                         color: Colors.black54,
                       ),
                       onPressed: () {
-                        controller.searchData('');
-                        textEditingController.clear();
+                         controller.clearSearchResults();
                       },
                     )
                   : null,
@@ -59,21 +58,21 @@ class SearchBarWidget extends StatelessWidget {
               if (value.isNotEmpty) {
                 controller.searchData(value);
               } else {
-                controller.searchData('');
+                controller.clearSearchResults();
               }
             },
             onEditingComplete: () {
               if (textEditingController.text.isNotEmpty) {
                 controller.searchData(textEditingController.text);
               } else {
-                controller.searchData('');
+                controller.clearSearchResults();
               }
             },
             onFieldSubmitted: (value) {
               if (textEditingController.text.isNotEmpty) {
                 controller.searchData(textEditingController.text);
               } else {
-                controller.searchData('');
+                controller.clearSearchResults();
               }
             },
             style: const TextStyle(

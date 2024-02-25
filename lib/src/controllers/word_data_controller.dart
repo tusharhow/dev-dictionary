@@ -1,77 +1,73 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
+import 'package:dev_dictionary/src/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/word_model.dart';
 
-class WordDataController extends GetxController {
-  @override
-  void onInit() {
+class WordDataController extends ChangeNotifier {
+  WordDataController() {
     getShuffledWordData();
     getRandomWord();
-    fetchWordOfTheDay();
-    super.onInit();
   }
 
   final TextEditingController searchController = TextEditingController();
 
-  var wordData = <Word>[].obs;
+  var wordData = <Word>[];
 
   Future<List<Word>> getShuffledWordData() async {
-    final baseUrl = dotenv.env['BASE_URL'];
-    final response = await rootBundle.loadString(baseUrl!);
+    final response = await rootBundle.loadString(Config.BASE_URL);
     var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
-    wordData(data.words);
+    wordData = data.words;
     wordData.shuffle();
-
     return wordData;
   }
 
-  var searhResults = <Word>[];
-  var isSearching = false.obs;
+  var searchResults = <Word>[];
+  var isSearching = false;
 
   Future<List<Word>> searchData(String word) async {
-    isSearching(true);
-    update();
-    searhResults.clear();
+    isSearching = true;
+    searchResults.clear();
+    notifyListeners();
+
     if (word.isEmpty) {
-      return searhResults;
+      return searchResults;
     }
 
     for (var wordDetail in wordData) {
       if (wordDetail.bn.toLowerCase().contains(word.toLowerCase()) ||
           wordDetail.en.toLowerCase().contains(word.toLowerCase()) ||
           wordDetail.detail.toLowerCase().contains(word.toLowerCase())) {
-        searhResults.remove(wordDetail);
-        searhResults.add(wordDetail);
+        searchResults.remove(wordDetail);
+        searchResults.add(wordDetail);
       }
     }
-    isSearching(false);
-    update();
-    return searhResults;
+    isSearching = false;
+    notifyListeners();
+    return searchResults;
   }
 
-  var randomWords = <Word>[].obs;
+  void clearSearchResults() {
+    searchResults.clear();
+    searchController.clear();
+    notifyListeners();
+  }
+
+  var randomWords = <Word>[];
 
   Future<List<Word>> getRandomWord() async {
-    final baseUrl = dotenv.env['BASE_URL'];
-    final response = await rootBundle.loadString(baseUrl!);
+    final response = await rootBundle.loadString(Config.BASE_URL);
     var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
-    randomWords(data.words);
-    update();
-    return wordData;
+    randomWords = data.words;
+    notifyListeners();
+    return randomWords;
   }
 
   Future<Word> getWordByEn(String en) async {
-    final baseUrl = dotenv.env['BASE_URL'];
-    final response = await rootBundle.loadString(baseUrl!);
+    final response = await rootBundle.loadString(Config.BASE_URL);
     var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
     var word = data.words.firstWhere((element) => element.en == en);
@@ -95,85 +91,7 @@ class WordDataController extends GetxController {
 
     if (nextPage * itemsPerPage <= wordData.length) {
       currentPage = nextPage;
-      update();
+      notifyListeners();
     }
-  }
-
-  final FlutterTts flutterTts = FlutterTts();
-  var isSpeakingEnglish = false.obs;
-  var isSpeakingBangla = false.obs;
-
-  Future<void> speak(String text, bool isEnglish) async {
-    await flutterTts.setLanguage(isEnglish ? 'en-US' : 'bn-BD');
-    await flutterTts.setPitch(1);
-    await flutterTts.setSpeechRate(0.5);
-
-    flutterTts.setCompletionHandler(() {
-      if (isEnglish) {
-        isSpeakingEnglish.value = false;
-        update();
-      } else {
-        isSpeakingBangla.value = false;
-        update();
-      }
-    });
-
-    await flutterTts.speak(text);
-
-    if (isEnglish) {
-      isSpeakingEnglish.value = true;
-      update();
-    } else {
-      isSpeakingBangla.value = true;
-      update();
-    }
-  }
-
-  Future<void> stop(bool isEnglish) async {
-    await flutterTts.stop();
-
-    if (isEnglish) {
-      isSpeakingEnglish.value = false;
-    } else {
-      isSpeakingBangla.value = false;
-    }
-    update();
-  }
-
-  int wordOfTheDay = 0; // Default value
-  late DateTime lastFetched;
-
-  Future<void> fetchWordOfTheDay() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    DateTime now = DateTime.now();
-    lastFetched = DateTime.parse(
-        prefs.getString('lastFetched') ?? '1970-01-01T00:00:00Z');
-
-    // Check if it's been more than a day since last fetch
-    if (now.difference(lastFetched).inDays >= 1) {
-      // Fetch new random number from the API
-      int randomWord = (await getRandomWordd()) as int;
-
-      wordOfTheDay = randomWord;
-      update();
-
-      // Save the new random number and update last fetched timestamp
-      prefs.setInt('wordOfTheDay', randomWord);
-      prefs.setString('lastFetched', now.toIso8601String());
-    } else {
-      // Use the existing random number
-
-      wordOfTheDay = prefs.getInt('wordOfTheDay') ?? 0;
-      update();
-    }
-  }
-
-  Future<int> getRandomWordd() async {
-    final baseUrl = dotenv.env['BASE_URL'];
-    final response = await rootBundle.loadString(baseUrl!);
-    var jsonResponse = json.decode(response);
-    var data = WordModel.fromJson(jsonResponse);
-
-    return data.words[Random().nextInt(data.words.length)].id;
   }
 }

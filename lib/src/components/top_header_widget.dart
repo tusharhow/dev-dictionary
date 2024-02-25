@@ -1,15 +1,12 @@
 import 'package:dev_dictionary/src/controllers/theme_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class TopHeaderDesktop extends StatelessWidget {
-  TopHeaderDesktop({Key? key}) : super(key: key);
+  const TopHeaderDesktop({Key? key}) : super(key: key);
 
-  final WordPropertyController wordPropertyController =
-      Get.put(WordPropertyController());
-  final ThemeController themeController = Get.put(ThemeController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -53,28 +50,31 @@ class TopHeaderDesktop extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              GestureDetector(
-                onTap: () {
-                  wordPropertyController.urlLauncher(
-                      'https://github.com/tusharhow/dev-dictionary');
-                },
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.star_border_rounded,
-                      size: 30,
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      'Github',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
+              Consumer<WordPropertyController>(
+                  builder: (context, wordPropertyController, c) {
+                return GestureDetector(
+                  onTap: () {
+                    wordPropertyController.urlLauncher(
+                        'https://github.com/tusharhow/dev-dictionary');
+                  },
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.star_border_rounded,
+                        size: 30,
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Github',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
               const SizedBox(width: 20),
               GestureDetector(
                 onTap: () {
@@ -91,26 +91,26 @@ class TopHeaderDesktop extends StatelessWidget {
                       'Bookmarks',
                       style: TextStyle(
                         fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(width: 20),
-              IconButton(
-                onPressed: () {
-                  themeController.toggleDarkMode();
-                },
-                icon: Obx(
-                  () => Icon(
-                    themeController.isDarkMode.value
+              Consumer<ThemeController>(builder: (context, themeController, c) {
+                return IconButton(
+                  onPressed: () {
+                    themeController.toggleDarkMode();
+                  },
+                  icon: Icon(
+                    themeController.isDarkMode
                         ? Icons.dark_mode
                         : Icons.light_mode,
                     size: 25,
                   ),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ],
