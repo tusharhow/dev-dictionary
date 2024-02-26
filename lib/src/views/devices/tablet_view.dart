@@ -1,7 +1,9 @@
 import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/src/components/list_item_view.dart';
+import 'package:dev_dictionary/src/components/pagination_row.dart';
 import 'package:dev_dictionary/src/components/search_bar_widget.dart';
 import 'package:dev_dictionary/src/components/search_result_widget.dart';
+import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../components/footer_widget.dart';
@@ -9,7 +11,7 @@ import '../../components/top_header_widget.dart';
 import '../../controllers/word_data_controller.dart';
 
 class TabletView extends StatelessWidget {
-  const TabletView({Key? key}) : super(key: key);
+  const TabletView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +51,19 @@ class TabletView extends StatelessWidget {
               controller.searchResults.isNotEmpty
                   ? const SearchResultWidget()
                   : ListItemView(
-                      future: controller.getShuffledWordData(),
+                      future: controller.getWordData(),
+                      controller:  controller,
                       crossAxisCount: 2,
                       itemCount: 15,
                       isMobile: false,
                     ),
+              const SizedBox(height: 20),
+              if (controller.searchResults.isEmpty)
+                controller.wordData.isEmpty
+                    ? const SizedBox()
+                    : PaginationRow(
+                        wordController: controller,
+                        wordPropertyController: WordPropertyController()),
               const SizedBox(height: 100),
               const FooterWidget(),
             ],

@@ -29,7 +29,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.router}) : super(key: key);
+  const MyApp({super.key, required this.router});
 
   final MyRouter router;
   @override
@@ -41,8 +41,13 @@ class MyApp extends StatelessWidget {
         routeInformationProvider: router.router.routeInformationProvider,
         routerDelegate: router.router.routerDelegate,
         title: AppConstants.appName,
-        theme:
-            themeController.isDarkMode ? ThemeData.dark() : ThemeData.light(),
+        theme: themeController.isDarkMode
+            ? ThemeData.dark(
+                useMaterial3: true,
+              )
+            : ThemeData.light(
+                useMaterial3: true,
+              ),
         themeMode:
             themeController.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       );

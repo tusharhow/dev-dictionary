@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 class BigScreenDetailsPage extends StatelessWidget {
-  const BigScreenDetailsPage({Key? key, required this.word}) : super(key: key);
+  const BigScreenDetailsPage({super.key, required this.word});
   final Word word;
 
   @override
@@ -87,9 +87,16 @@ class BigScreenDetailsPage extends StatelessWidget {
                       child: Container(
                         height: 50,
                         width: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.deepPurple,
-                          borderRadius: BorderRadius.circular(10),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10,
+                              offset: Offset(0, 5),
+                            ),
+                          ],
                         ),
                         child: Center(
                           child: Consumer<WordPropertyController>(builder:
@@ -101,7 +108,6 @@ class BigScreenDetailsPage extends StatelessWidget {
                               },
                               icon: const Icon(
                                 Icons.arrow_back_ios,
-                                color: Colors.white,
                               ),
                             );
                           }),
@@ -260,7 +266,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.1,
@@ -285,7 +291,7 @@ class BigScreenDetailsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20 * 3),
+                    const SizedBox(height: 16 + 10),
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(

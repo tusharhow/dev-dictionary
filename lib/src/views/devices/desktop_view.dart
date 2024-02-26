@@ -11,7 +11,7 @@ import '../../components/top_header_widget.dart';
 import '../../controllers/word_data_controller.dart';
 
 class DesktopView extends StatelessWidget {
-  const DesktopView({Key? key}) : super(key: key);
+  const DesktopView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,8 @@ class DesktopView extends StatelessWidget {
                                 child: CircularProgressIndicator(),
                               )
                             : ListItemView(
-                                future: wordController.getShuffledWordData(),
+                                future: wordController.getWordData(),
+                                controller: wordController,
                                 crossAxisCount: 3,
                                 itemCount: 15,
                                 isMobile: false,

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../components/popup_widget.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

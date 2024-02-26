@@ -5,10 +5,10 @@ import '../controllers/word_data_controller.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({
-    Key? key,
+    super.key,
     required this.textEditingController,
     required this.controller,
-  }) : super(key: key);
+  });
   final TextEditingController textEditingController;
   final WordDataController controller;
 
@@ -17,9 +17,9 @@ class SearchBarWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
       child: Card(
-        elevation: 2,
+        elevation: 3,
         child: SizedBox(
-          height: 60,
+          height: 55,
           width: Responsive.isDesktop(context)
               ? MediaQuery.of(context).size.width / 3
               : Responsive.isTablet(context)
@@ -29,7 +29,7 @@ class SearchBarWidget extends StatelessWidget {
             controller: textEditingController,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.deepPurple.shade100,
+              fillColor: Colors.deepPurple.shade50,
               hintText: 'শব্দের অর্থ খুঁজুন...',
               hintStyle: const TextStyle(
                 color: Colors.black54,

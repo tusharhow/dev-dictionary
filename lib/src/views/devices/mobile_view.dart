@@ -9,7 +9,7 @@ import '../../components/search_result_widget.dart';
 import '../../controllers/word_data_controller.dart';
 
 class MobileView extends StatelessWidget {
-  MobileView({Key? key}) : super(key: key);
+  MobileView({super.key});
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -24,8 +24,8 @@ class MobileView extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Container(
                 margin: const EdgeInsets.all(10),
-                height: 40,
-                width: 40,
+                height: 45,
+                width: 45,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
@@ -43,7 +43,7 @@ class MobileView extends StatelessWidget {
                   },
                   icon: Image.asset(
                     'assets/icons/menu.png',
-                    color: Colors.black,
+                    height: 25,
                   ),
                 ),
               ),
@@ -53,8 +53,8 @@ class MobileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 60,
-                  width: 100,
+                  height: 40,
+                  width: 60,
                   decoration: BoxDecoration(
                     color: Colors.deepPurple,
                     borderRadius: BorderRadius.circular(10),
@@ -63,7 +63,7 @@ class MobileView extends StatelessWidget {
                     child: Text(
                       'ডেভ',
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: 25,
                         color: Colors.white,
                         fontFamily: 'Borno',
                         fontWeight: FontWeight.bold,
@@ -75,34 +75,35 @@ class MobileView extends StatelessWidget {
                 const Text(
                   'ডিকশনারি',
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 25,
                     fontFamily: 'Borno',
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             Center(
               child: Text(
                 AppConstants.appSlug,
                 style: GoogleFonts.inter(
-                  fontSize: 18,
+                  fontSize: 15,
                   fontWeight: FontWeight.w400,
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
             SearchBarWidget(
               textEditingController: controller.searchController,
               controller: controller,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             Expanded(
               child: controller.searchResults.isNotEmpty
                   ? const SearchResultWidget()
                   : ListItemView(
-                      future: controller.getShuffledWordData(),
+                      future: controller.getWordData(),
+                      controller: controller,
                       crossAxisCount: 0,
                       itemCount: 15,
                       isMobile: true,

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../controllers/word_data_controller.dart';
 
 class SearchResultWidget extends StatelessWidget {
-  const SearchResultWidget({Key? key}) : super(key: key);
+  const SearchResultWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

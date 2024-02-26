@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class MobileDetailsScreen extends StatelessWidget {
-  const MobileDetailsScreen({Key? key, required this.word}) : super(key: key);
+  const MobileDetailsScreen({super.key, required this.word});
   final Word word;
 
   @override
@@ -35,42 +35,45 @@ class MobileDetailsScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        appBar: AppBar(
-          elevation: 0,
-          leading: Container(
-            margin: const EdgeInsets.all(10),
-            height: 50,
-            width: 50,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10,
-                  offset: Offset(0, 5),
-                ),
-              ],
-            ),
-            child: Center(
-              child: IconButton(
-                onPressed: () {
-                  wordPropertyController.stop(true);
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
-        ),
         body: SingleChildScrollView(
           child: Consumer<BookmarkController>(
               builder: (context, controller, child) {
             return Column(
               children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 10,
+                            offset: Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: IconButton(
+                          onPressed: () {
+                            wordPropertyController.stop(true);
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -78,7 +81,7 @@ class MobileDetailsScreen extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.deepPurple[300],
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -216,7 +219,6 @@ class MobileDetailsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -226,7 +228,7 @@ class MobileDetailsScreen extends StatelessWidget {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.deepPurple[300],
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -245,7 +247,7 @@ class MobileDetailsScreen extends StatelessWidget {
                     }),
                   ),
                 ),
-                const SizedBox(height: 20 * 3),
+                const SizedBox(height: 16),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -258,7 +260,7 @@ class MobileDetailsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 10),
                 Consumer<WordDataController>(
                     builder: (context, wordDataController, child) {
                   return FutureBuilder<List<Word>>(
@@ -271,6 +273,7 @@ class MobileDetailsScreen extends StatelessWidget {
                               scrollDirection: Axis.vertical,
                               itemCount: 3,
                               shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 final word =
                                     wordDataController.randomWords[index];
@@ -283,14 +286,14 @@ class MobileDetailsScreen extends StatelessWidget {
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 8),
+                                        horizontal: 8, vertical: 5),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: Colors.deepPurple[200],
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(20.0),
+                                        padding: const EdgeInsets.all(16.0),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,

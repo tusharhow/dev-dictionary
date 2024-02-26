@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({Key? key}) : super(key: key);
+  const DrawerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,21 @@ class DrawerWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
+        ListTile(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          leading: const Icon(
+            Icons.home,
+            size: 25,
+          ),
+          title: Text(
+            'Home',
+            style: GoogleFonts.inter(
+              fontSize: 15,
+            ),
+          ),
+        ),
         ListTile(
           onTap: () {
             context.go('/${AppRouteConstants.bookmarksRouteName}');

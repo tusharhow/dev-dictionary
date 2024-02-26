@@ -4,29 +4,24 @@ import 'package:dev_dictionary/src/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import '../models/word_model.dart';
 
 class WordDataController extends ChangeNotifier {
   WordDataController() {
-    getShuffledWordData();
+    getWordData();
     getRandomWord();
+
+    scrollController.addListener(onScroll);
   }
 
   final TextEditingController searchController = TextEditingController();
 
   var wordData = <Word>[];
 
-  Future<List<Word>> getShuffledWordData() async {
+  Future<List<Word>> getWordData() async {
     final response = await rootBundle.loadString(Config.BASE_URL);
     var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
-    var now = DateTime.now();
-    var formatter = DateFormat('mm');
-    var formattedTime = formatter.format(now);
-    if (int.parse(formattedTime) % 2 == 0) {
-      data.words.shuffle();
-    }
     wordData = data.words;
     return wordData;
   }
@@ -87,9 +82,10 @@ class WordDataController extends ChangeNotifier {
   List<dynamic> getPaginatedData() {
     final startIndex = (currentPage - 1) * itemsPerPage;
     var endIndex = startIndex + itemsPerPage;
+
     endIndex = endIndex.clamp(0, wordData.length);
-    notifyListeners();
-    return wordData.sublist(startIndex, endIndex);
+
+    return wordData.sublist(0, endIndex);
   }
 
   void nextPage(BuildContext context) {
@@ -114,5 +110,36 @@ class WordDataController extends ChangeNotifier {
         context.go('/?page=$currentPage');
       }
     }
+  }
+
+  final scrollController = ScrollController();
+  bool isLoading = false;
+
+  void onScroll() {
+    if (scrollController.position.maxScrollExtent == scrollController.offset) {
+      lazyLoad();
+    }
+  }
+
+  void lazyLoad() {
+    isLoading = true;
+    notifyListeners();
+    Future.delayed(const Duration(seconds: 2), () {
+      if (currentPage < (wordData.length / itemsPerPage).ceil()) {
+        getPaginatedData();
+        currentPage++;
+        isLoading = false;
+        notifyListeners();
+      } else {
+        isLoading = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }
