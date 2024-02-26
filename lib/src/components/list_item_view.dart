@@ -96,7 +96,7 @@ class ListItemView extends StatelessWidget {
                   childAspectRatio: 3,
                 ),
                 itemBuilder: (context, index) {
-                  final topic = snapshot.data![index];
+                  final topic = controller.getPaginatedData()[index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(

@@ -1,9 +1,8 @@
 import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/src/components/list_item_view.dart';
-import 'package:dev_dictionary/src/components/pagination_row.dart';
+import 'package:dev_dictionary/src/components/pagination_widget.dart';
 import 'package:dev_dictionary/src/components/search_bar_widget.dart';
 import 'package:dev_dictionary/src/components/search_result_widget.dart';
-import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../components/footer_widget.dart';
@@ -52,7 +51,7 @@ class TabletView extends StatelessWidget {
                   ? const SearchResultWidget()
                   : ListItemView(
                       future: controller.getWordData(),
-                      controller:  controller,
+                      controller: controller,
                       crossAxisCount: 2,
                       itemCount: 15,
                       isMobile: false,
@@ -61,9 +60,9 @@ class TabletView extends StatelessWidget {
               if (controller.searchResults.isEmpty)
                 controller.wordData.isEmpty
                     ? const SizedBox()
-                    : PaginationRow(
+                    : PaginationWidget(
                         wordController: controller,
-                        wordPropertyController: WordPropertyController()),
+                      ),
               const SizedBox(height: 100),
               const FooterWidget(),
             ],

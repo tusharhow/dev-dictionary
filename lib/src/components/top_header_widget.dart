@@ -52,52 +52,63 @@ class TopHeaderDesktop extends StatelessWidget {
             children: [
               Consumer<WordPropertyController>(
                   builder: (context, wordPropertyController, c) {
-                return GestureDetector(
-                  onTap: () {
+                return TextButton.icon(
+                  onPressed: () {
                     wordPropertyController.urlLauncher(
                         'https://github.com/tusharhow/dev-dictionary');
                   },
-                  child: const Row(
-                    children: [
-                      Icon(
-                        Icons.star_border_rounded,
-                        size: 30,
+                  icon: Consumer<ThemeController>(
+                      builder: (context, themeController, c) {
+                    return Icon(
+                      Icons.star_border_rounded,
+                      size: 30,
+                      color: themeController.isDarkMode
+                          ? Colors.white
+                          : Colors.black,
+                    );
+                  }),
+                  label: Consumer<ThemeController>(
+                      builder: (context, themeController, c) {
+                    return Text(
+                      'Github',
+                      style: TextStyle(
+                        color: themeController.isDarkMode
+                            ? Colors.white
+                            : Colors.black,
                       ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Github',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  }),
                 );
               }),
               const SizedBox(width: 20),
-              GestureDetector(
-                onTap: () {
-                  context.go('/bookmarks');
-                },
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.bookmarks_outlined,
-                      size: 25,
+              Consumer<ThemeController>(builder: (context, themeController, c) {
+                return TextButton.icon(
+                  style: TextButton.styleFrom(
+                    iconColor: themeController.isDarkMode
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                  onPressed: () {
+                    context.go('/bookmarks');
+                  },
+                  icon: Icon(
+                    Icons.bookmarks_outlined,
+                    size: 25,
+                    color: themeController.isDarkMode
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                  label: Text(
+                    'Bookmarks',
+                    style: TextStyle(
+                      color: themeController.isDarkMode
+                          ? Colors.white
+                          : Colors.black,
                     ),
-                    SizedBox(width: 5),
-                    Text(
-                      'Bookmarks',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 20),
+                  ),
+                );
+              }),
+              const SizedBox(width: 16),
               Consumer<ThemeController>(builder: (context, themeController, c) {
                 return IconButton(
                   onPressed: () {

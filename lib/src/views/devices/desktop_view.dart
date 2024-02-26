@@ -1,9 +1,8 @@
 import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/src/components/list_item_view.dart';
-import 'package:dev_dictionary/src/components/pagination_row.dart';
+import 'package:dev_dictionary/src/components/pagination_widget.dart';
 import 'package:dev_dictionary/src/components/search_bar_widget.dart';
 import 'package:dev_dictionary/src/components/search_result_widget.dart';
-import 'package:dev_dictionary/src/controllers/word_property_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../components/footer_widget.dart';
@@ -51,7 +50,7 @@ class DesktopView extends StatelessWidget {
                       textEditingController: wordController.searchController,
                       controller: wordController,
                     ),
-                    const SizedBox(height: 80),
+                    const SizedBox(height: 60),
                     wordController.searchResults.isNotEmpty
                         ? const SearchResultWidget()
                         : wordController.wordData.isEmpty
@@ -62,16 +61,15 @@ class DesktopView extends StatelessWidget {
                                 future: wordController.getWordData(),
                                 controller: wordController,
                                 crossAxisCount: 3,
-                                itemCount: 15,
+                                itemCount:
+                                    wordController.getPaginatedData().length,
                                 isMobile: false,
                               ),
                     const SizedBox(height: 20),
                     if (wordController.searchResults.isEmpty)
-                      wordController.wordData.isEmpty
-                          ? const SizedBox()
-                          : PaginationRow(
-                              wordController: wordController,
-                              wordPropertyController: WordPropertyController()),
+                      PaginationWidget(
+                        wordController: wordController,
+                      ),
                   ],
                 ),
               ),
