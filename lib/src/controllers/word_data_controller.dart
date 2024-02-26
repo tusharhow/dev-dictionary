@@ -4,6 +4,7 @@ import 'package:dev_dictionary/src/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import '../models/word_model.dart';
 
 class WordDataController extends ChangeNotifier {
@@ -20,8 +21,13 @@ class WordDataController extends ChangeNotifier {
     final response = await rootBundle.loadString(Config.BASE_URL);
     var jsonResponse = json.decode(response);
     var data = WordModel.fromJson(jsonResponse);
+    var now = DateTime.now();
+    var formatter = DateFormat('mm');
+    var formattedTime = formatter.format(now);
+    if (int.parse(formattedTime) % 2 == 0) {
+      data.words.shuffle();
+    }
     wordData = data.words;
-    wordData.shuffle();
     return wordData;
   }
 
