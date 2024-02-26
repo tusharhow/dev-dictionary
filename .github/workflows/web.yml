@@ -15,8 +15,6 @@ jobs:
         with:
           channel: "stable"
           baseHref: /dev-dictionary/
-          run: flutter pub get
-          run: flutter build web --web-renderer canvaskit --release
             
 
 
