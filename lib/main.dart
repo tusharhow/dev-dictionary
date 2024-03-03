@@ -1,5 +1,6 @@
 import 'package:dev_dictionary/constants.dart';
 import 'package:dev_dictionary/src/controllers/bookmark_controller.dart';
+import 'package:dev_dictionary/src/controllers/bottom_nav_bar_controller.dart';
 import 'package:dev_dictionary/src/controllers/contributor_controller.dart';
 import 'package:dev_dictionary/src/controllers/theme_controller.dart';
 import 'package:dev_dictionary/src/controllers/word_data_controller.dart';
@@ -20,10 +21,9 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => WordPropertyController()),
         ChangeNotifierProvider(create: (context) => BookmarkController()),
         ChangeNotifierProvider(create: (context) => ContributorController()),
+        ChangeNotifierProvider(create: (context) => BottomNavbarController()),
       ],
-      child: MyApp(
-        router: MyRouter(),
-      ),
+      child: MyApp(router: MyRouter()),
     ),
   );
 }

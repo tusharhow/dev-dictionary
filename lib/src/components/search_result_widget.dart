@@ -166,7 +166,7 @@ class SearchResultWidget extends StatelessWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.deepPurple,
+                                        color: Colors.deepPurple.shade300,
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       child: ListTile(

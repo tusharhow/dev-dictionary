@@ -5,10 +5,10 @@ import 'package:dev_dictionary/src/router/app_route_constants.dart';
 import 'package:dev_dictionary/src/views/about/about_us.dart';
 import 'package:dev_dictionary/src/views/about/contact_us.dart';
 import 'package:dev_dictionary/src/views/bookmark/bookmark_screen.dart';
+import 'package:dev_dictionary/src/views/bottom_nav/bottom_nav_screen.dart';
 import 'package:dev_dictionary/src/views/contrbution/contribution_screen.dart';
 import 'package:dev_dictionary/src/views/detail/details_screen.dart';
 import 'package:dev_dictionary/src/views/devices/desktop_view.dart';
-import 'package:dev_dictionary/src/views/devices/mobile_view.dart';
 import 'package:dev_dictionary/src/views/devices/tablet_view.dart';
 import 'package:dev_dictionary/src/views/responsive/responsive.dart';
 import 'package:dev_dictionary/src/views/settings/settings_screen.dart';
@@ -21,7 +21,13 @@ class MyRouter {
         path: AppRouteConstants.homeRouteName,
         builder: (BuildContext context, GoRouterState state) {
           return Responsive(
-            mobile: MobileView(),
+            mobile: Navigator(
+              onGenerateRoute: (settings) {
+                return MaterialPageRoute(
+                  builder: (context) => BottomNavScreen(),
+                );
+              },
+            ),
             desktop: const DesktopView(),
             tablet: const TabletView(),
           );
@@ -129,7 +135,7 @@ class MyRouter {
               return CustomTransitionPage(
                 key: state.pageKey,
                 child: Responsive(
-                  mobile: MobileView(),
+                  mobile: BottomNavScreen(),
                   desktop: const DesktopView(),
                   tablet: const TabletView(),
                 ),
