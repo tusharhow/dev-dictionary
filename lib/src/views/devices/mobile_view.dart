@@ -19,6 +19,7 @@ class MobileView extends StatelessWidget {
           drawer: const DrawerWidget(),
           body: Column(
             children: [
+              const SizedBox(height: 16),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

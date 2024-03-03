@@ -113,6 +113,7 @@ class BookMarkScreen extends StatelessWidget {
                                             style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w700,
+                                              color: Colors.black,
                                             ),
                                           ),
                                           subtitle: Text(
@@ -120,6 +121,7 @@ class BookMarkScreen extends StatelessWidget {
                                             style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
+                                              color: Colors.black54,
                                             ),
                                           ),
                                           trailing: IconButton(

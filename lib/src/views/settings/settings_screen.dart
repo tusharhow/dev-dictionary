@@ -19,6 +19,7 @@ class SettingsScreen extends StatelessWidget {
               builder: (context, controller, child) {
             return Column(
               children: [
+                const SizedBox(height: 16),
                 ListTile(
                   onTap: () {
                     showDialog(

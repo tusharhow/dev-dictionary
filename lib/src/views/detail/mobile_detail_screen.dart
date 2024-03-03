@@ -329,6 +329,7 @@ class MobileDetailsScreen extends StatelessWidget {
                           }
                         });
                   }),
+                  const SizedBox(height: 16),
                 ],
               );
             }),
